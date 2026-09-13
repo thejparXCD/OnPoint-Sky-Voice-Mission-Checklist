@@ -46,6 +46,14 @@ describe('Mission execution',()=>{
     expect(restoreState(catalog,'garbage').status).toBe('ready');
     expect(restoreState(catalog,JSON.stringify({...s,index:-2})).index).toBe(0);
   });
+  it('keeps a completed segment complete when returning to its aircraft',()=>{
+    let s=advance(initialState(catalog),'START');const count=segmentFor(catalog,s)!.items.length;
+    for(let i=0;i<count;i++)s=advance(s,'CHECK');
+    s=transition(catalog,s,{type:'PLATFORM',id:'parrot-anafi-usa'});
+    s=transition(catalog,s,{type:'PLATFORM',id:'dji-air-3s'});
+    expect(s.status).toBe('complete');expect(s.index).toBe(count);
+    expect(advance(s,'START')).toEqual(s);
+  });
 });
 describe('Voice command handling',()=>{
   const p=catalog.platforms[1];

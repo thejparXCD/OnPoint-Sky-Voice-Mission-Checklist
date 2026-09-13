@@ -2,7 +2,7 @@
 
 ## Automated
 
-`npm test`: 35 passing tests covering:
+`npm test`: 36 passing tests covering:
 
 - One-item acknowledgement, pause, completion boundaries, previous-item reopening and per-segment progress.
 - Emergency priority, all four Parrot branches, repeated interruption, normal-checklist bookmarking and explicit restoration.
@@ -36,7 +36,7 @@ On September 13, 2026, n8n executed both requests with the existing **ElevenLabs
 ## Outstanding integration checks
 
 - The [app-to-n8n bridge](https://n8n.onpointhq.com/workflow/P6nt6GLoaVDD7Gs3) is imported and remains unpublished. A dedicated private webhook guard must be selected on both webhooks and shared with the app server. Import can auto-select an existing Header Auth credential, so verify the guard explicitly before publishing. The reusable repository template retains credential placeholders.
-- Cloudflare Access blocks local requests to n8n's management API. Browser access works; protected webhook routes may also require an approved Cloudflare service token.
+- Cloudflare Access blocks local requests to n8n's management API. The separate `n8n-hooks.onpointhq.com` host is reachable and returns the expected unpublished-webhook response. No Cloudflare service token was needed for that connectivity check.
 - No external HTTPS host has been selected or deployed.
 - Real Scribe microphone transcription and app-server-to-n8n audio delivery still need an authenticated integration test.
 - A physical iPhone Safari/Home Screen test remains necessary for microphone permissions, headset echo cancellation, voice interruption latency, audio routing, screen wake lock, background/resume behavior and storage persistence. A resized desktop browser is not a hardware test.

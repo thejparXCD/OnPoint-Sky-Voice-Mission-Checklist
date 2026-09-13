@@ -13,7 +13,8 @@ export function transition(c: Catalog, s: MissionState, a: Action): MissionState
       if (s.emergency) return s;
       const next = c.platforms.find(p => p.id === a.id); if (!next) return s;
       const seg = next.segments.find(x => !x.emergency)!;
-      return { ...s, platformId: next.id, segmentId: seg.id, index: s.progress[seg.id] ?? 0, status: 'ready' };
+      const index = Math.min(s.progress[seg.id] ?? 0, seg.items.length);
+      return { ...s, platformId: next.id, segmentId: seg.id, index, status: index === seg.items.length ? 'complete' : 'ready' };
     }
     case 'SEGMENT': {
       if (s.emergency) return s;
