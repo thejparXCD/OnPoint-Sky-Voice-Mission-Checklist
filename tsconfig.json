@@ -6,5 +6,5 @@
     "allowJs": true, "resolveJsonModule": true, "esModuleInterop": true,
     "types": ["vite/client"]
   },
-  "include": ["src", "shared", "vite.config.ts"]
+  "include": ["src", "shared", "netlify", "vite.config.ts"]
 }

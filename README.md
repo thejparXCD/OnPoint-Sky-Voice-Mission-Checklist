@@ -2,7 +2,7 @@
 
 An installable, iPhone-friendly checklist reader for DJI Air 3S and Parrot ANAFI USA. Reads the supplied Trello template items using ElevenLabs voice `TWutjvRaJqAX89preB4e` and advances one item when you say **check**.
 
-**Implementation status:** local app, production build, and automated tests are complete. The existing n8n **ElevenLabs** Header Auth credential successfully generated audio with the specified voice and created a Scribe listening token. The app-to-n8n webhook guard, HTTPS deployment, and physical iPhone microphone test remain to be completed. The UI clearly identifies device speech when ElevenLabs is unavailable.
+**Live app:** [onpoint-sky-checklists.netlify.app](https://onpoint-sky-checklists.netlify.app). The authenticated n8n bridge is published, and the deployed app has passed sign-in, audio delivery, listening-token, and synthetic speech-command checks. All 39 automated tests pass. A physical iPhone microphone/headset test remains to be completed. The UI clearly identifies device speech when ElevenLabs is unavailable.
 
 ## Run locally
 
@@ -24,7 +24,7 @@ npm start     # Serve the built app and API together on port 3001
 
 ## Use on iPhone
 
-1. Open the deployed **HTTPS** address in Safari.
+1. Open [OnPoint Sky](https://onpoint-sky-checklists.netlify.app) in Safari.
 2. Tap **Share → Add to Home Screen → Add**.
 3. Open the app. Select your aircraft and a segment, such as Pre-departure.
 4. In Voice settings, unlock voice using your private app access code.
@@ -50,18 +50,36 @@ The interrupt is immediate **after recognition delivers the keyword**. Browser, 
 
 ## Connect the existing n8n credential
 
-The app supports an n8n bridge so the ElevenLabs API key can stay in n8n. `n8n/voice-bridge.json` is a reusable import template with credential placeholders. A [draft bridge is already imported](https://n8n.onpointhq.com/workflow/P6nt6GLoaVDD7Gs3) in the owner's n8n instance. Live manual checks verified both ElevenLabs endpoints using the existing **ElevenLabs** Header Auth credential, with header name `xi-api-key`. Its secret was not exported.
+The app supports an n8n bridge so the ElevenLabs API key can stay in n8n. The owner's [voice bridge is published and tested](https://n8n.onpointhq.com/workflow/P6nt6GLoaVDD7Gs3). Both webhooks use **OnPoint Sky Voice Guard**; the outgoing requests use **ElevenLabs**, with header name `xi-api-key`. The ElevenLabs secret was not exported. `n8n/voice-bridge.json` remains a reusable import template with credential placeholders.
 
-1. Open the existing draft bridge, or import `n8n/voice-bridge.json` into another n8n instance.
+To recreate the connection on another instance:
+
+1. Import `n8n/voice-bridge.json` into n8n.
 2. In both ElevenLabs HTTP Request nodes, choose the existing **Header Auth** credential whose header is `xi-api-key`. If the stored credential uses a dedicated ElevenLabs credential type, configure the HTTP Request nodes' predefined credential type to match; do not copy the secret into node fields.
 3. Set both Webhook nodes to a private Header Auth credential named **OnPoint Sky Voice Guard**, header name `X-OnPoint-Voice`, with a strong randomly generated value.
 4. Set the app server's `N8N_VOICE_SECRET` to that guard value and `N8N_VOICE_BASE_URL` to `https://n8n-hooks.onpointhq.com/webhook/onpoint-sky-voice` (the webhook host shown by this n8n instance).
 5. If Cloudflare Access protects these webhook routes, configure an approved service token through `CF_ACCESS_CLIENT_ID` and `CF_ACCESS_CLIENT_SECRET`. Keep the existing access policy in place.
-6. Test both speech and token routes using the guard header. Then publish the workflow and test the app's **Test voice** and **Enable voice** controls.
+6. Open **Workflow settings** and explicitly set saving failed executions, successful executions, manual executions, and execution progress to **Do not save**. n8n's file import may discard these settings or auto-select a credential: verify all four credential assignments and the saved settings before publishing.
+7. Test both speech and token routes using the guard header. Then publish the workflow and test the app's **Test voice** and **Enable voice** controls.
 
 The bridge has separate `/speech` and `/token` webhooks, a fixed voice/model, a 3,000-character input limit, and execution-data saving disabled. Never remove the webhook authentication. The app never sends its permanent key to the iPhone; it obtains a short-lived single-use Scribe token for the microphone WebSocket.
 
 Alternatively, provide `ELEVENLABS_API_KEY` directly as a **server-only** environment variable. The n8n bridge takes precedence if `N8N_VOICE_BASE_URL` is set. In bridge mode, keep the configured voice and model consistent with the fixed values in the workflow.
+
+## Netlify deployment
+
+The live site is **onpoint-sky-checklists**, site ID `d8d73cfd-c9b0-4a3b-9242-66b59aa0c369`. It is deployed manually from the local build; GitHub pushes do not automatically redeploy it.
+
+`netlify/functions/api.mts` exposes the same tested Express API using Netlify's Request/Response interface. Static assets are served from `dist`. Permanent secrets are configured in Netlify's **Functions** scope for the **production** context: `APP_ACCESS_CODE`, `SESSION_SECRET`, `APP_ORIGIN`, `N8N_VOICE_BASE_URL`, and `N8N_VOICE_SECRET`. The voice/model variables use the supplied defaults. The app access code is supplied privately, outside this repository.
+
+```sh
+npm ci
+npm run check
+npx netlify-cli link --id d8d73cfd-c9b0-4a3b-9242-66b59aa0c369
+npx netlify-cli deploy --prod --no-build --dir dist --functions netlify/functions
+```
+
+The function also has a Netlify limit of 180 requests per IP per minute. In-process audio caching and additional route limits apply within each warm instance; they are not distributed storage. Live Trello refresh is disabled in the Netlify function to avoid serving different revisions across instances. Update the bundled source using `npm run sync:trello`, review the changes, then rebuild and redeploy. Draft deploys require their own secret context and exact HTTPS `APP_ORIGIN` before voice can be used there.
 
 ## Deploy with Coolify / Docker
 
@@ -80,7 +98,7 @@ The repository includes a multi-stage Dockerfile and health check. Create a Cool
 
 Generate a session secret locally with `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"` and put it directly into the server's secret settings. Do not commit it. Production startup refuses to run without an access code, session secret and HTTPS origin. `compose.yaml` binds the local container port to loopback for use behind a reverse proxy.
 
-Do not deploy this as GitHub Pages or a static-only site: the voice endpoints require the Node server. The application has not yet been deployed.
+The Docker deployment remains available as an alternative to Netlify. A static-only host such as GitHub Pages cannot run the authenticated voice API.
 
 ## Checklist source and known gaps
 

@@ -1,13 +1,12 @@
 import express from 'express';
 import { createHash, createHmac, randomBytes, timingSafeEqual } from 'node:crypto';
-import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
+import bundled from '../data/trello-source.json' with { type: 'json' };
 import { normalizeSource, speechIndex } from '../shared/catalog.mjs';
 import { syncSource } from './trello.mjs';
 
-const bundled = JSON.parse(readFileSync(new URL('../data/trello-source.json', import.meta.url), 'utf8'));
 const equal = (a,b) => timingSafeEqual(createHash('sha256').update(String(a)).digest(), createHash('sha256').update(String(b)).digest());
-export function createApp({ env = process.env, fetchImpl = fetch } = {}) {
+export function createApp({ env = process.env, fetchImpl = fetch, serveStatic = true } = {}) {
   const app = express();
   const production = env.NODE_ENV === 'production';
   if (production && (!env.APP_ACCESS_CODE || !env.SESSION_SECRET || !env.APP_ORIGIN?.startsWith('https://'))) throw new Error('Production requires APP_ACCESS_CODE, SESSION_SECRET, and an HTTPS APP_ORIGIN.');
@@ -118,9 +117,11 @@ export function createApp({ env = process.env, fetchImpl = fetch } = {}) {
     } catch {res.status(502).json({error:'ElevenLabs audio is unavailable. Try again or use the device voice.'});}
   });
   app.use('/api',(_req,res) => res.status(404).json({error:'API route not found.'}));
-  const dist=fileURLToPath(new URL('../dist',import.meta.url));
-  app.use(express.static(dist,{index:false,setHeaders:(res,path)=>{if(path.endsWith('sw.js')||path.endsWith('index.html'))res.setHeader('Cache-Control','no-cache');}}));
-  app.get('/{*path}',(_req,res) => res.sendFile(`${dist}/index.html`));
+  if (serveStatic) {
+    const dist=fileURLToPath(new URL('../dist',import.meta.url));
+    app.use(express.static(dist,{index:false,setHeaders:(res,path)=>{if(path.endsWith('sw.js')||path.endsWith('index.html'))res.setHeader('Cache-Control','no-cache');}}));
+    app.get('/{*path}',(_req,res) => res.sendFile(`${dist}/index.html`));
+  }
   app.use((error,_req,res,_next) => res.status(error.status === 413 ? 413 : 400).json({error:'Request could not be processed.'}));
   return app;
 }
