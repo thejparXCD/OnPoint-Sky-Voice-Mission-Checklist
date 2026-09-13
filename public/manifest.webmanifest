@@ -1,0 +1,15 @@
+{
+  "name": "OnPoint Sky Mission Checklist",
+  "short_name": "OnPoint Sky",
+  "description": "Voice-guided drone checklists and emergency procedures.",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f4f5f1",
+  "theme_color": "#10232e",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

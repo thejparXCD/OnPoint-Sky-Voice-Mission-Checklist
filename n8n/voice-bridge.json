@@ -1,0 +1,203 @@
+{
+  "name": "OnPoint Sky — Voice bridge",
+  "nodes": [
+    {
+      "id": "sky-speech-webhook",
+      "name": "Speech webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "webhookId": "onpoint-sky-speech",
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "onpoint-sky-voice/speech",
+        "authentication": "headerAuth",
+        "responseMode": "lastNode",
+        "responseData": "firstEntryBinary",
+        "responseBinaryPropertyName": "data",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Content-Type",
+                "value": "audio/mpeg"
+              },
+              {
+                "name": "Cache-Control",
+                "value": "no-store"
+              }
+            ]
+          }
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "SELECT_CREDENTIAL",
+          "name": "OnPoint Sky Voice Guard (X-OnPoint-Voice)"
+        }
+      }
+    },
+    {
+      "id": "sky-validate",
+      "name": "Validate speech",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        250,
+        0
+      ],
+      "parameters": {
+        "jsCode": "const body = $input.first().json.body;\nif (!body || typeof body.text !== 'string' || !body.text.trim() || body.text.length > 3000) throw new Error('Invalid speech request');\nreturn [{ json: { text: body.text } }];"
+      }
+    },
+    {
+      "id": "sky-speech",
+      "name": "ElevenLabs speech",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        500,
+        0
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.elevenlabs.io/v1/text-to-speech/TWutjvRaJqAX89preB4e/stream?output_format=mp3_44100_128",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "contentType": "raw",
+        "rawContentType": "application/json",
+        "body": "={{ JSON.stringify({ text: $json.text, model_id: 'eleven_flash_v2_5', voice_settings: { stability: 0.65, similarity_boost: 0.75, speed: 0.95 } }) }}",
+        "options": {
+          "timeout": 15000,
+          "response": {
+            "response": {
+              "responseFormat": "file",
+              "outputPropertyName": "data"
+            }
+          }
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "SELECT_CREDENTIAL",
+          "name": "Existing ElevenLabs header credential (xi-api-key)"
+        }
+      }
+    },
+    {
+      "id": "sky-token-webhook",
+      "name": "Listening token webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        300
+      ],
+      "webhookId": "onpoint-sky-token",
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "onpoint-sky-voice/token",
+        "authentication": "headerAuth",
+        "responseMode": "lastNode",
+        "responseData": "firstEntryJson",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "Cache-Control",
+                "value": "no-store"
+              }
+            ]
+          }
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "SELECT_CREDENTIAL",
+          "name": "OnPoint Sky Voice Guard (X-OnPoint-Voice)"
+        }
+      }
+    },
+    {
+      "id": "sky-token",
+      "name": "ElevenLabs single-use token",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        500,
+        300
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.elevenlabs.io/v1/single-use-token/realtime_scribe",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {
+          "timeout": 15000,
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "SELECT_CREDENTIAL",
+          "name": "Existing ElevenLabs header credential (xi-api-key)"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Speech webhook": {
+      "main": [
+        [
+          {
+            "node": "Validate speech",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate speech": {
+      "main": [
+        [
+          {
+            "node": "ElevenLabs speech",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Listening token webhook": {
+      "main": [
+        [
+          {
+            "node": "ElevenLabs single-use token",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveDataErrorExecution": "none",
+    "saveDataSuccessExecution": "none",
+    "saveManualExecutions": false,
+    "saveExecutionProgress": false
+  },
+  "active": false
+}
