@@ -5,128 +5,120 @@ import raw from '../data/trello-source.json';
 import type { Catalog, Config } from '../src/types';
 const catalog=normalizeSource(raw) as Catalog;
 const config:Config={authenticated:true,authRequired:false,voiceConfigured:true,voiceId:'TWutjvRaJqAX89preB4e',audioVersion:'test',trelloConfigured:false};
-let played:string[];
-let contexts:FakeContext[];
-let resume: (context:FakeContext)=>Promise<void>;
-class FakeContext {
-  state='running'; destination={};
-  onstatechange: (()=>void)|null=null;
-  constructor(){contexts.push(this);}
-  resume(){return resume(this);}
-  async decodeAudioData(bytes:ArrayBuffer){return new TextDecoder().decode(bytes);}
-  createBufferSource(){return {buffer:'',playbackRate:{value:1},onended:null,connect(){},disconnect(){},stop(){},start(){played.push(this.buffer);}};}
+let played:string[], blobs:Map<string,Blob>, nextUrl:number;
+let playAudio:(media:FakeMedia,blob:Blob)=>Promise<void>;
+let playSilence:(media:FakeMedia)=>Promise<void>;
+class FakeMedia {
+  src='';paused=true;muted=false;volume=1;playbackRate=1;playCalls:string[]=[];
+  onplaying:(()=>void)|null=null;onpause:(()=>void)|null=null;onended:(()=>void)|null=null;
+  onerror:(()=>void)|null=null;onwaiting:(()=>void)|null=null;
+  play(){this.playCalls.push(this.src);const blob=blobs.get(this.src);if(!blob)return Promise.reject(new DOMException('No source','NotSupportedError'));return blob.type==='audio/wav'?playSilence(this):playAudio(this,blob);}
+  pause(){this.paused=true;this.onpause?.();}
+  removeAttribute(name:string){if(name==='src')this.src='';}
+  load(){}
 }
-describe('Audio interruption and offline cache',()=>{
+function fixture(){const media=new FakeMedia();const engine=new AudioEngine();engine.attach(media as unknown as HTMLAudioElement);engine.configure(catalog,config);engine.onNotice=vi.fn();return {engine,media};}
+const response=(text:string)=>new Response(text,{headers:{'Content-Type':'audio/mpeg'}});
+describe('Media readout, interruption and offline packs',()=>{
   beforeEach(()=>{
-    played=[];contexts=[];resume=async context=>{context.state='running';};const cache=new Map<string,Response>();
-    vi.stubGlobal('AudioContext',FakeContext);
+    played=[];blobs=new Map();nextUrl=0;const cache=new Map<string,Response>();
+    vi.spyOn(URL,'createObjectURL').mockImplementation(blob=>{const url=`blob:audio-${++nextUrl}`;blobs.set(url,blob as Blob);return url;});
+    vi.spyOn(URL,'revokeObjectURL').mockImplementation(url=>{blobs.delete(url);});
+    playSilence=async media=>{media.paused=false;};
+    playAudio=async(media,blob)=>{played.push(await blob.text());media.paused=false;media.onplaying?.();};
+    vi.stubGlobal('AudioContext',class {constructor(){throw new Error('Web Audio must not be used for output');}});
     vi.stubGlobal('navigator',{audioSession:{type:'auto'}});
     vi.stubGlobal('window',{speechSynthesis:{cancel:vi.fn(),speak:vi.fn(),resume:vi.fn()}});
     vi.stubGlobal('SpeechSynthesisUtterance',class {constructor(public text:string){}});
-    vi.stubGlobal('caches',{open:async()=>({match:async(key:string)=>cache.get(key)?.clone(),put:async(key:string,response:Response)=>{cache.set(key,response.clone());}})});
+    vi.stubGlobal('caches',{open:async()=>({match:async(key:string)=>cache.get(key)?.clone(),put:async(key:string,r:Response)=>{cache.set(key,r.clone());}})});
+    vi.stubGlobal('fetch',vi.fn(async()=>response('voice')));
   });
-  afterEach(()=>{vi.unstubAllGlobals();vi.useRealTimers();});
-  it('never plays a stale normal item after an emergency interrupts its request',async()=>{
-    let resolveOld:(r:Response)=>void=()=>{};let started:()=>void=()=>{};const firstStarted=new Promise<void>(r=>started=r);
-    vi.stubGlobal('fetch',vi.fn((url:string)=>url.includes('emergency-prompt')?Promise.resolve(new Response('emergency',{headers:{'Content-Type':'audio/mpeg'}})):new Promise<Response>(resolve=>{resolveOld=resolve;started();})));
-    const engine=new AudioEngine();engine.configure(catalog,config);await engine.unlock();
-    const old=engine.play(catalog.platforms[0].segments[0].items[0].id);await firstStarted;
-    await engine.play('emergency-prompt',true);resolveOld(new Response('obsolete item',{headers:{'Content-Type':'audio/mpeg'}}));await old;
+  afterEach(()=>{vi.restoreAllMocks();vi.unstubAllGlobals();vi.useRealTimers();});
+  it('activates the same native player during the tap, before async loading',async()=>{
+    const {engine,media}=fixture();const playing=engine.play('voice-test');
+    expect(media.playCalls).toHaveLength(1);expect(blobs.get(media.src)?.type).toBe('audio/wav');
+    await playing;
+    expect(media.playCalls).toHaveLength(2);expect(played).toEqual(['voice']);expect(engine.status).toBe('speaking');
+    expect(media.muted).toBe(false);expect(media.volume).toBe(1);expect(blobs.size).toBe(1);
+  });
+  it('reuses downloaded recordings offline, including an expired online session',async()=>{
+    const {engine}=fixture();await engine.play('voice-test');
+    vi.mocked(fetch).mockRejectedValue(new Error('offline'));engine.configure(catalog,{...config,authenticated:false});await engine.play('voice-test');
+    expect(played).toEqual(['voice','voice']);expect(fetch).toHaveBeenCalledTimes(1);expect(blobs.size).toBe(1);
+  });
+  it('works without Audio Session support and does not construct an AudioContext',async()=>{
+    vi.stubGlobal('navigator',{});const {engine}=fixture();await engine.play('voice-test');expect(played).toEqual(['voice']);
+  });
+  it('selects playback and microphone categories without replacing the player',async()=>{
+    const {engine,media}=fixture();await engine.unlock();
+    const session=(navigator as unknown as {audioSession:{type:string}}).audioSession;expect(session.type).toBe('playback');
+    engine.setMicrophoneActive(true);await engine.play('voice-test');expect(session.type).toBe('play-and-record');
+    engine.setMicrophoneActive(false);expect(session.type).toBe('playback');expect(media.playCalls.length).toBeGreaterThan(1);
+  });
+  it('never plays a stale normal response after emergency interrupts it',async()=>{
+    let resolveOld:(r:Response)=>void=()=>{},started:()=>void=()=>{};const firstStarted=new Promise<void>(r=>started=r);
+    vi.mocked(fetch).mockImplementation(url=>String(url).includes('emergency-prompt')?Promise.resolve(response('emergency')):new Promise<Response>(resolve=>{resolveOld=resolve;started();}));
+    const {engine}=fixture();const old=engine.play(catalog.platforms[0].segments[0].items[0].id);await firstStarted;
+    await engine.play('emergency-prompt',true);resolveOld(response('obsolete'));await old;
     expect(played).toEqual(['emergency']);
   });
-  it('uses cached audio with no network call after the first play',async()=>{
-    const fetchMock=vi.fn(async()=>new Response('cached audio',{headers:{'Content-Type':'audio/mpeg'}}));vi.stubGlobal('fetch',fetchMock);
-    const engine=new AudioEngine();engine.configure(catalog,config);await engine.unlock();await engine.play('emergency-prompt');
-    fetchMock.mockRejectedValue(new Error('offline'));await engine.play('emergency-prompt');
-    expect(played).toEqual(['cached audio','cached audio']);expect(fetchMock).toHaveBeenCalledTimes(1);
+  it('stops an in-flight request and clears the native replay source',async()=>{
+    let resolveResponse:(r:Response)=>void=()=>{},started:()=>void=()=>{};const firstStarted=new Promise<void>(r=>started=r);
+    vi.mocked(fetch).mockImplementation(()=>new Promise<Response>(resolve=>{resolveResponse=resolve;started();}));
+    const {engine,media}=fixture();const playing=engine.play('voice-test');await firstStarted;
+    engine.stop();resolveResponse(response('late'));await playing;
+    expect(played).toEqual([]);expect(media.src).toBe('');expect(engine.status).toBe('idle');expect(blobs.size).toBe(0);
   });
-  it('stopping pending playback keeps it stopped even if the response arrives later',async()=>{
-    let resolveResponse:(r:Response)=>void=()=>{};let started:()=>void=()=>{};const firstStarted=new Promise<void>(r=>started=r);
-    vi.stubGlobal('fetch',vi.fn(()=>new Promise<Response>(resolve=>{resolveResponse=resolve;started();})));
-    const engine=new AudioEngine();engine.configure(catalog,config);await engine.unlock();const playing=engine.play('voice-test');await firstStarted;
-    engine.stop();resolveResponse(new Response('late',{headers:{'Content-Type':'audio/mpeg'}}));await playing;
-    expect(played).toEqual([]);expect(engine.status).toBe('idle');
+  it('ignores an old play promise and its handlers after an emergency takes over',async()=>{
+    const {engine,media}=fixture();await engine.unlock();
+    let resolveOld=()=>{},started=()=>{};let stalePlaying:(()=>void)|null=null;const firstStarted=new Promise<void>(r=>started=r);
+    playAudio=async(m,blob)=>{const text=await blob.text();if(text==='old'){stalePlaying=m.onplaying;started();return new Promise<void>(r=>resolveOld=r);}played.push(text);m.paused=false;m.onplaying?.();};
+    vi.mocked(fetch).mockImplementation(async url=>response(String(url).includes('emergency-prompt')?'emergency':'old'));
+    const old=engine.play('voice-test');await firstStarted;
+    await engine.play('emergency-prompt',true);const emergencyUrl=media.src;resolveOld();(stalePlaying as (()=>void)|null)?.();await old;
+    expect(media.src).toBe(emergencyUrl);expect(engine.spokenText).toContain('Lost link');expect(played).toEqual(['emergency']);expect(engine.status).toBe('speaking');
   });
-  it('uses an audible iPhone audio category and switches for microphone capture',async()=>{
-    const engine=new AudioEngine();await engine.unlock();
-    const session=(navigator as unknown as {audioSession:{type:string}}).audioSession;
-    expect(session.type).toBe('playback');
-    engine.setMicrophoneActive(true);await engine.unlock();expect(session.type).toBe('play-and-record');
-    engine.setMicrophoneActive(false);expect(session.type).toBe('playback');
+  it('keeps blocked audio available for a direct native Play tap',async()=>{
+    const {engine,media}=fixture();playAudio=async()=>{throw new DOMException('Gesture needed','NotAllowedError');};
+    await engine.play('voice-test');expect(engine.status).toBe('idle');expect(engine.onNotice).toHaveBeenCalledWith(expect.stringContaining('Tap Play'));
+    const source=media.src;expect(blobs.get(source)?.type).toBe('audio/mpeg');expect(window.speechSynthesis.speak).not.toHaveBeenCalled();
+    playAudio=async m=>{m.paused=false;m.onplaying?.();};await media.play();
+    expect(engine.status).toBe('speaking');expect(media.src).toBe(source);expect(fetch).toHaveBeenCalledTimes(1);
   });
-  it('still plays on browsers without the optional Audio Session API',async()=>{
-    vi.stubGlobal('navigator',{});
-    vi.stubGlobal('fetch',vi.fn(async()=>new Response('voice',{headers:{'Content-Type':'audio/mpeg'}})));
-    const engine=new AudioEngine();engine.configure(catalog,config);await engine.unlock();await engine.play('voice-test');
-    expect(played).toEqual(['voice']);
+  it('reflects native pause, resume and end events without advancing the checklist',async()=>{
+    const {engine,media}=fixture();await engine.play('voice-test');const source=media.src;
+    media.pause();expect(engine.status).toBe('idle');expect(engine.spokenText).toBe('');
+    await media.play();expect(engine.status).toBe('speaking');
+    media.onended?.();expect(engine.status).toBe('idle');expect(media.src).toBe(source);expect(fetch).toHaveBeenCalledTimes(1);
   });
-  it('waits for the tap to resume audio instead of failing on a fast cache hit',async()=>{
-    vi.stubGlobal('fetch',vi.fn(async()=>new Response('voice',{headers:{'Content-Type':'audio/mpeg'}})));
-    const engine=new AudioEngine();engine.configure(catalog,config);await engine.unlock();await engine.download('voice-test');
-    contexts[0].state='suspended';
-    let finish=()=>{};resume=context=>new Promise<void>(resolve=>{finish=()=>{context.state='running';resolve();};});
-    const unlocking=engine.unlock();const playing=engine.play('voice-test');
-    expect(engine.status).toBe('loading');expect(played).toEqual([]);
-    finish();await unlocking;await playing;
-    expect(played).toEqual(['voice']);expect(window.speechSynthesis.speak).not.toHaveBeenCalled();
+  it('still tries real audio if the priming play was blocked',async()=>{
+    playSilence=async()=>{throw new DOMException('Blocked','NotAllowedError');};
+    const {engine}=fixture();await engine.play('voice-test');expect(played).toEqual(['voice']);expect(engine.status).toBe('speaking');
   });
-  it('recovers an interrupted audio context before the next voice command',async()=>{
-    vi.stubGlobal('fetch',vi.fn(async()=>new Response('voice',{headers:{'Content-Type':'audio/mpeg'}})));
-    const engine=new AudioEngine();engine.configure(catalog,config);await engine.unlock();
-    contexts[0].state='interrupted';await engine.play('voice-test');
-    expect(contexts[0].state).toBe('running');expect(played).toEqual(['voice']);
+  it('reports a play call that never settles and allows a direct retry',async()=>{
+    const {engine,media}=fixture();await engine.unlock();vi.useFakeTimers();let started=()=>{};const firstStarted=new Promise<void>(r=>started=r);
+    playAudio=()=>{started();return new Promise(()=>{});};const playing=engine.play('voice-test');await firstStarted;
+    await vi.advanceTimersByTimeAsync(5000);await playing;
+    expect(engine.status).toBe('idle');expect(media.paused).toBe(true);expect(media.src).not.toBe('');expect(engine.onNotice).toHaveBeenCalledWith(expect.stringContaining('Tap Play'));
   });
-  it('does not play an obsolete item after interruption while audio resumes',async()=>{
-    vi.stubGlobal('fetch',vi.fn(async(url:string)=>new Response(url.includes('emergency-prompt')?'emergency':'old',{headers:{'Content-Type':'audio/mpeg'}})));
-    const engine=new AudioEngine();engine.configure(catalog,config);await engine.unlock();await engine.download('voice-test');await engine.download('emergency-prompt');
-    contexts[0].state='suspended';
-    let finish=()=>{};let notify=()=>{};const started=new Promise<void>(r=>notify=r);
-    resume=context=>new Promise<void>(resolve=>{finish=()=>{context.state='running';resolve();};notify();});
-    const old=engine.play('voice-test');await started;
-    const emergency=engine.play('emergency-prompt',true);finish();await Promise.all([old,emergency]);
-    expect(played).toEqual(['emergency']);
+  it('detects stalled playback and clears its waiting timer when stopped',async()=>{
+    const {engine,media}=fixture();await engine.play('voice-test');vi.useFakeTimers();media.onwaiting?.();
+    expect(engine.status).toBe('loading');await vi.advanceTimersByTimeAsync(5000);expect(engine.status).toBe('idle');expect(engine.onNotice).toHaveBeenCalledWith(expect.stringContaining('buffering'));
+    media.onwaiting?.();engine.stop();vi.mocked(engine.onNotice).mockClear();await vi.advanceTimersByTimeAsync(5000);expect(engine.onNotice).not.toHaveBeenCalled();
   });
-  it('reports blocked playback without claiming to read or hiding it with fallback',async()=>{
-    vi.stubGlobal('fetch',vi.fn(async()=>new Response('voice',{headers:{'Content-Type':'audio/mpeg'}})));
-    const engine=new AudioEngine();engine.configure(catalog,config);await engine.unlock();engine.onNotice=vi.fn();
-    contexts[0].state='suspended';resume=async()=>{throw new DOMException('Not allowed','NotAllowedError');};
-    await engine.play('voice-test');
-    expect(engine.status).toBe('idle');expect(played).toEqual([]);expect(window.speechSynthesis.speak).not.toHaveBeenCalled();
-    expect(engine.onNotice).toHaveBeenCalledWith(expect.stringContaining('Tap Read item or Test voice'));
-  });
-  it('reports a suspended output during reading if the device will not resume',async()=>{
-    vi.stubGlobal('fetch',vi.fn(async()=>new Response('voice',{headers:{'Content-Type':'audio/mpeg'}})));
-    const engine=new AudioEngine();engine.configure(catalog,config);await engine.unlock();await engine.play('voice-test');engine.onNotice=vi.fn();
-    resume=async()=>{throw new DOMException('Not allowed','NotAllowedError');};contexts[0].state='interrupted';contexts[0].onstatechange?.();
-    expect(engine.status).toBe('loading');
-    await vi.waitFor(()=>expect(engine.status).toBe('idle'));
-    expect(engine.onNotice).toHaveBeenCalledWith(expect.stringContaining('Tap Read item or Test voice'));
-  });
-  it('times out a pending device resume without leaving audio stuck loading',async()=>{
-    vi.useFakeTimers();const engine=new AudioEngine();await engine.unlock();contexts[0].state='suspended';resume=()=>new Promise(()=>{});
-    const result=expect(engine.unlock()).rejects.toThrow('Tap Read item or Test voice');
-    await vi.advanceTimersByTimeAsync(2500);await result;
-  });
-  it('asks for the access code on an expired session without losing the reason',async()=>{
-    vi.stubGlobal('fetch',vi.fn(async()=>Response.json({error:'Unlock voice'},{status:401})));
-    const engine=new AudioEngine();engine.configure(catalog,config);engine.onUnlockRequired=vi.fn();engine.onNotice=vi.fn();
-    await engine.play('voice-test');
-    expect(engine.onUnlockRequired).toHaveBeenCalledOnce();expect(engine.onNotice).toHaveBeenCalledWith(expect.stringContaining('app access code'));
+  it('retains the access-code explanation on a failed uncached request',async()=>{
+    vi.mocked(fetch).mockResolvedValue(Response.json({error:'Unlock voice'},{status:401}));const {engine}=fixture();engine.onUnlockRequired=vi.fn();
+    await engine.play('voice-test');expect(engine.onUnlockRequired).toHaveBeenCalledOnce();expect(engine.onNotice).toHaveBeenCalledWith(expect.stringContaining('app access code'));
     expect(engine.status).toBe('idle');expect(window.speechSynthesis.speak).not.toHaveBeenCalled();
   });
-  it('starts selected device speech in the tap and shows Reading only after onstart',async()=>{
-    const engine=new AudioEngine();engine.configure(catalog,config);engine.useDeviceVoice=true;
-    const playing=engine.play('voice-test');
-    expect(window.speechSynthesis.speak).toHaveBeenCalledOnce();expect(engine.status).toBe('loading');
-    const utterance=vi.mocked(window.speechSynthesis.speak).mock.calls[0][0];
-    utterance.onstart?.(new Event('start') as SpeechSynthesisEvent);
-    expect(engine.status).toBe('speaking');
-    utterance.onend?.(new Event('end') as SpeechSynthesisEvent);await playing;
-    expect(engine.status).toBe('idle');
+  it('starts selected device speech in the tap and waits for its start event',async()=>{
+    const {engine,media}=fixture();engine.useDeviceVoice=true;const playing=engine.play('voice-test');
+    expect(window.speechSynthesis.speak).toHaveBeenCalledOnce();expect(engine.status).toBe('loading');expect(media.playCalls).toHaveLength(0);
+    const utterance=vi.mocked(window.speechSynthesis.speak).mock.calls[0][0];utterance.onstart?.(new Event('start') as SpeechSynthesisEvent);expect(engine.status).toBe('speaking');
+    utterance.onend?.(new Event('end') as SpeechSynthesisEvent);await playing;expect(engine.status).toBe('idle');
   });
-  it('detects device speech that never starts instead of remaining silently in Reading',async()=>{
-    vi.useFakeTimers();const engine=new AudioEngine();engine.configure(catalog,config);engine.useDeviceVoice=true;engine.onNotice=vi.fn();
-    await engine.play('voice-test');await vi.advanceTimersByTimeAsync(3000);
-    expect(engine.status).toBe('idle');expect(engine.onNotice).toHaveBeenLastCalledWith(expect.stringContaining('Device speech did not start'));
+  it('detects device speech that never starts',async()=>{
+    vi.useFakeTimers();const {engine}=fixture();engine.useDeviceVoice=true;
+    await engine.play('voice-test');await vi.advanceTimersByTimeAsync(3000);expect(engine.status).toBe('idle');expect(engine.onNotice).toHaveBeenLastCalledWith(expect.stringContaining('Device speech did not start'));
   });
 });

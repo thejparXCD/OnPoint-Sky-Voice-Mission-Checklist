@@ -124,6 +124,8 @@ See [validation notes](docs/VALIDATION.md) for what has and has not been verifie
 
 ### No sound on iPhone
 
-Open Settings and unlock voice on this device if prompted, then tap **Test voice**. Raise media volume during the test and check the selected speaker/headset. Version 1.0.1 selects the iPhone playback audio category (iOS 17+) and recovers interrupted audio; older iOS versions may still require Silent mode off. If playback is blocked, the app displays the next action.
+Version 1.0.2 plays the ElevenLabs recordings through a persistent HTML audio player. Existing downloaded packs are reused. Tap **Read item / Repeat** to load the current recording, or use **Test voice** in Settings. If autoplay is blocked, tap the player's own **Play** button; the recording stays loaded for that direct tap.
 
-After an update, reload once, close every Safari tab and Home Screen window for the app, then reopen it. Check **App v1.0.1** in Settings. Closing windows lets the pending update activate without replacing an active checklist; saved progress and downloaded audio are retained.
+If recognition works but the readout is silent, use **Test with microphone off** in Settings to compare output without microphone capture. This stops recognition until you enable it again. If the player's timer advances without sound, check media volume and the selected speaker/headset.
+
+After an update, reload once, close every Safari tab and Home Screen window for the app, then reopen it. Check **App v1.0.2** in Settings. Closing windows lets the pending update activate without replacing an active checklist; saved progress and downloaded audio are retained.

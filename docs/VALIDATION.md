@@ -2,7 +2,7 @@
 
 ## Automated
 
-`npm test`: 50 passing tests covering:
+`npm test`: 51 passing tests covering:
 
 - One-item acknowledgement, pause, completion boundaries, previous-item reopening and per-segment progress.
 - Emergency priority, all four Parrot branches, repeated interruption, normal-checklist bookmarking and explicit restoration.
@@ -12,7 +12,7 @@
 - Production startup requirements, signed sessions, authentication failures, CSRF/origin controls, guess limits and secret redaction.
 - Fixed voice requests, scoped Scribe token creation, audio cache reuse, n8n bridge routing and failed Trello refresh retention.
 - Audio interruption races: a delayed old response never plays after Emergency or Stop; cached audio plays without another network request.
-- iPhone audio-session categories, pending/interrupted resumes and timeout, expired voice sessions, and device-speech start events and watchdog.
+- Native audio gesture activation, cached/offline playback, expired sessions, blocked-play recovery, playback timeouts/stalls, resource cleanup, native events, and device-speech start events/watchdog.
 - The hosted Request/Response adapter: signed-cookie round trips, byte-exact binary audio, origin and body-size enforcement, and resistance to spoofed forwarding headers in login limits.
 
 `npm run build`: TypeScript validation and production build pass. The ElevenLabs client SDK is loaded separately from the initial interface. Its vendor chunk is approximately 139 KB gzip and generates Vite's default large-chunk advisory.
@@ -37,7 +37,7 @@ On September 13, 2026, n8n executed both requests with the existing **ElevenLabs
 
 ## Deployed integration checks
 
-[Live application](https://onpoint-sky-checklists.netlify.app), deployed September 13, 2026. [Deployment log](https://app.netlify.com/projects/onpoint-sky-checklists/deploys/6aa726cc1250a0ea8ebc6f7a).
+[Live application](https://onpoint-sky-checklists.netlify.app), deployed September 13, 2026. [Deployment log](https://app.netlify.com/projects/onpoint-sky-checklists/deploys/6aa729973dd4928acf55a769).
 
 - The n8n bridge is published. Export verification confirmed both webhooks select **OnPoint Sky Voice Guard**, outgoing HTTP nodes select **ElevenLabs**, and failed/successful/manual/progress execution payload saving is disabled.
 - An unauthenticated n8n token request returned 403; the configured guard returned 200 with a token.
@@ -63,3 +63,15 @@ Playback waits for a pending AudioContext resume and retries after an interrupti
 A fresh authenticated production voice-test response returned 55,633 bytes of MP3 audio. FFmpeg decoded 3.47 seconds, with mean volume -18.5 dB and peak -1.4 dB, confirming non-silent service output. Local Chromium playback reached Reading without a fallback or console error. These checks do not establish audibility on the owner's physical iPhone; that confirmation is still pending.
 
 To pick up the update, reload the site once to download the new service worker, close all of its Safari tabs and Home Screen windows, then reopen. Settings should show App v1.0.1. Existing progress and audio packs are retained.
+
+## Native audio correction, v1.0.2
+
+The owner clarified that recognition and downloaded packs work, but spoken output is still silent. The previous v1.0.1 correction was insufficient; it must not be treated as a confirmed resolution. The exact output route on their physical iPhone has not been inspected.
+
+The reader now uses one persistent HTMLAudioElement for cached/downloaded MP3 blobs, with a short silent WAV activation during the initial gesture. It no longer creates an AudioContext for readout. This addresses another plausible failure mode: [WebKit reports include AudioContexts that say running but produce no output while HTML audio remains usable](https://bugs.webkit.org/show_bug.cgi?id=291892). The player's controls and timeline are visible on desktop and mobile. If playback is blocked, the current blob remains loaded for a direct native Play tap. Emergency/Stop clears the old source, aborts pending playback, and ignores stale promises/events. The existing voice-pack cache and voice IDs are unchanged.
+
+Settings includes Test with microphone off, which stops recognition and tests the same ElevenLabs recording without capture. It lets the owner compare simultaneous input/output routing against playback alone.
+
+Local Chromium decoded and played a 7.523-second checklist recording to its end, with volume 1, muted false, readyState 4, and no media error. A pointer click on the native player restarted the recording, with currentTime advancing and the app showing Reading. Emergency replaced that recording with a 2.534-second emergency prompt, which also completed. The native accessibility-action test crashed the embedded test browser; pointer control succeeded in a fresh tab. The 51 automated tests and production/TypeScript build pass. Physical iPhone audibility remains pending.
+
+The final 393 × 852 layout displays the native player above the checklist. Test with microphone off completed a 3.579-second voice test in the same player.

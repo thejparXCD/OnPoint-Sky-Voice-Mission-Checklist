@@ -1,20 +1,17 @@
 import type { Catalog, Config, Platform } from './types';
 import { speechIndex } from '../shared/catalog.mjs';
+import { MediaOutput } from './media-output';
 export type AudioStatus = 'idle' | 'loading' | 'speaking';
 const AUDIO_CACHE = 'onpoint-audio-v1';
 class VoiceAccessError extends Error {}
-class PlaybackBlockedError extends Error {}
-const PLAYBACK_HELP = 'Audio is paused by your device. Tap Read item or Test voice to enable sound.';
 type AudioNavigator = Navigator & { audioSession?: { type: string } };
 export class AudioEngine {
-  private context: AudioContext | null = null;
-  private source: AudioBufferSourceNode | null = null;
+  private output=new MediaOutput((status,text)=>{this.spokenText=text;this.setStatus(status);},message=>this.onNotice(message));
   private controller: AbortController | null = null;
   private generation = 0;
   private speech: Record<string,string> = {};
   private revision = '';
   private config: Config | null = null;
-  private resuming: Promise<void> | null = null;
   private microphoneActive = false;
   private speechWatchdog: ReturnType<typeof setTimeout> | null = null;
   status: AudioStatus = 'idle';
@@ -27,7 +24,7 @@ export class AudioEngine {
   configure(catalog: Catalog, config: Config | null) { this.speech=speechIndex(catalog);this.revision=catalog.revision;this.config=config; }
   private setStatus(status: AudioStatus) { this.status=status;this.onStatus(status); }
   private setSession() {
-    // Web Audio defaults to ambient on iPhone, which obeys the Silent switch.
+    // Declare playback intent explicitly where the Audio Session API exists.
     // Use the recording category only while the microphone is in use.
     const session = (navigator as AudioNavigator).audioSession;
     const type = this.microphoneActive ? 'play-and-record' : 'playback';
@@ -37,38 +34,13 @@ export class AudioEngine {
     if (this.microphoneActive === active) return;
     this.microphoneActive = active;this.setSession();
   }
-  async unlock() {
-    this.setSession();
-    if(!this.context){
-      const context=new AudioContext();this.context=context;
-      context.onstatechange=()=>{
-        if(context.state==='running'||!this.source||this.status!=='speaking')return;
-        const generation=this.generation;this.setStatus('loading');
-        void this.unlock().then(()=>{
-          if(generation===this.generation&&this.source){this.setStatus('speaking');}
-        }).catch(()=>{
-          if(generation===this.generation){this.stop();this.onNotice(PLAYBACK_HELP);}
-        });
-      };
-    }
-    if (this.context.state === 'running') return;
-    if (!this.resuming) {
-      const context = this.context;
-      this.resuming = new Promise<void>((resolve,reject)=>{
-        const timeout=setTimeout(()=>reject(new PlaybackBlockedError(PLAYBACK_HELP)),2500);
-        context.resume().then(()=>{
-          clearTimeout(timeout);
-          if(context.state==='running')resolve();else reject(new PlaybackBlockedError(PLAYBACK_HELP));
-        },()=>{clearTimeout(timeout);reject(new PlaybackBlockedError(PLAYBACK_HELP));});
-      }).finally(()=>{this.resuming=null;});
-    }
-    await this.resuming;
-  }
+  attach(element:HTMLAudioElement|null){this.output.attach(element);}
+  async unlock() {this.setSession();return this.output.unlock();}
   stop() {
     ++this.generation;
     this.controller?.abort();this.controller=null;
     if(this.speechWatchdog){clearTimeout(this.speechWatchdog);this.speechWatchdog=null;}
-    if(this.source){ this.source.onended=null;try {this.source.stop();}catch{/* Already ended. */}this.source.disconnect();this.source=null; }
+    this.output.stop();
     window.speechSynthesis?.cancel();
     this.spokenText='';this.setStatus('idle');
   }
@@ -95,33 +67,27 @@ export class AudioEngine {
     const signal=this.controller.signal;
     // Keep an explicitly selected device voice inside the original tap gesture.
     if(this.useDeviceVoice){this.speakOnDevice(text,generation,'Device voice selected.');return;}
+    // Call play on the persistent media element before any async cache/network work.
+    const activation=this.unlock().catch(()=>{});
     let fallbackReason='ElevenLabs is not connected.';
     try {
       const cached=await this.cached(id);
       if(generation!==this.generation)return;
       if (cached || this.config?.voiceConfigured) {
         const response=cached ?? await this.download(id,AbortSignal.any([signal,AbortSignal.timeout(urgent?2200:12000)]));
-        const bytes=await response.arrayBuffer();
+        const blob=await response.blob();
+        await activation;
         if(generation!==this.generation)return;
-        // Await the tap's pending resume, and recover after a phone/mic interruption.
-        await this.unlock();
-        if(generation!==this.generation)return;
-        const context=this.context!;
-        const buffer=await context.decodeAudioData(bytes);
-        await this.unlock();
-        if(generation!==this.generation)return;
-        const source=context.createBufferSource();this.source=source;source.buffer=buffer;source.playbackRate.value=this.rate;source.connect(context.destination);
-        source.onended=()=>{source.disconnect();if(generation===this.generation){this.source=null;this.spokenText='';this.setStatus('idle');}};
-        source.start();this.spokenText=text;this.setStatus('speaking');return;
+        this.setSession();
+        await this.output.play(blob,text,this.rate);return;
       }
     } catch (error) {
       if(generation!==this.generation || signal.aborted)return;
-      if(error instanceof VoiceAccessError){this.setStatus('idle');this.onUnlockRequired();this.onNotice(error.message);return;}
-      if(error instanceof PlaybackBlockedError){this.setStatus('idle');this.onNotice(error.message);return;}
+      if(error instanceof VoiceAccessError){this.output.stop();this.setStatus('idle');this.onUnlockRequired();this.onNotice(error.message);return;}
       fallbackReason=error instanceof Error ? error.message : 'Audio unavailable.';
     }
     if (generation!==this.generation)return;
-    this.speakOnDevice(text,generation,`${fallbackReason} Trying device voice.`);
+    this.output.stop();this.speakOnDevice(text,generation,`${fallbackReason} Trying device voice.`);
   }
   private speakOnDevice(text:string,generation:number,notice:string) {
     this.setSession();
