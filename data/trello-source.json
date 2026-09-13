@@ -1,0 +1,1739 @@
+{
+  "boardUrl": "https://trello.com/b/ZODVUaPx/flight-ops",
+  "importedAt": "2026-09-13T21:12:42.148Z",
+  "platforms": [
+    {
+      "id": "dji-air-3s",
+      "name": "DJI Air 3S",
+      "cardId": "6906228b98efd8532448df5a",
+      "cardUrl": "https://trello.com/c/Bw3sn6Oh/1-dji-air-3s-checklist",
+      "description": "Copy this template for every mission.\n**IM SAFE**\n\n- Illness\tAm I sick or feeling unwell?\n- Medication\tAm I on any medications that impair judgment?\n- Stress\tAm I under significant stress?\n- Alcohol\tHave I consumed alcohol in the last 8 hours?\n- Fatigue\tAm I rested and alert?\n- Emotion\tAm I emotionally stable and focused?",
+      "checklists": [
+        {
+          "id": "69079f6fcbe93e1cd36e3785",
+          "name": "Office/Pre-Departure Planning",
+          "position": 70368744177664,
+          "items": [
+            {
+              "id": "69079f8129c4fb20bc716a13",
+              "text": "Review NOTAMs, TFRs, and local airspace status (e.g., through B4UFLY, Airdata, or LAANC app) for every planned flight location.",
+              "position": 140737488355328
+            },
+            {
+              "id": "69079f90f06a3fd7f64ef811",
+              "text": "Obtain LAANC airspace or any other required operational approvals; save/screenshot reference number.",
+              "position": 140737488371712
+            },
+            {
+              "id": "69079f9768c0191009e55b6f",
+              "text": "Verify drone registration, operator license, REC or Part 107 certificate, and proof of insurance coverage.",
+              "position": 140737488388096
+            },
+            {
+              "id": "69079f9f842f3d32263c938b",
+              "text": "Review and print/prepare documentation as required (insurance, waivers, permits, flight authorizations).",
+              "position": 140737488404480
+            },
+            {
+              "id": "69079fa850c9b82ef0e01b27",
+              "text": "Confirm scheduled mission details and participants; notify property owners, team, or relevant authorities of planned activity.",
+              "position": 140737488420864
+            },
+            {
+              "id": "69ef9df6808e204bccf35089",
+              "text": " Confirm mission deliverables: photos, video, thermal, mapping, inspection shots, Matterport, client-specific views.",
+              "position": 140737488424960
+            },
+            {
+              "id": "69ef9df5066a521270d13e0c",
+              "text": " Confirm firmware/software compatibility before leaving; avoid field updates unless required.",
+              "position": 140737488429056
+            },
+            {
+              "id": "69079faf4ca85d8cb3dd69d4",
+              "text": "Review and finalize flight plan, RTH/”fail safe” parameters, and designated landing/takeoff zones.",
+              "position": 140737488437248
+            },
+            {
+              "id": "69079fb8b9be39eaad35c6cf",
+              "text": "Check local weather forecast for flight session (visibility, wind, precipitation, extreme temperatures); note alternate or “no-go” windows.",
+              "position": 140737488453632
+            },
+            {
+              "id": "69079fc38bedb09b4d7bd5c5",
+              "text": "Record weather METAR/TAF for historical tracking in Dronelogbook/mission log.",
+              "position": 140737488470016
+            },
+            {
+              "id": "6907a00363bd04d8f0439949",
+              "text": "Ensure batteries (drone, controller, tablets/devices) are charged at ≥75%.",
+              "position": 140737488486400
+            },
+            {
+              "id": "6907a00f37351157c00358eb",
+              "text": "Check battery condition (no bulging, damage, or swelling); review battery log for cycles/performance issues.",
+              "position": 140737488502784
+            },
+            {
+              "id": "690622d1c20e8fcad58c91e4",
+              "text": "Inspect drone body, arms, landing gear, and propellers for cracks, chips, or debris.",
+              "position": 140737488535552
+            },
+            {
+              "id": "69079ff833cbfae68aa6d5b3",
+              "text": "Secure propellers and payload (gimbal, camera, sensor) and remove any transit covers.",
+              "position": 140737488551936
+            },
+            {
+              "id": "6907a040ef7c2e40e0f95a66",
+              "text": "Perform office power/connectivity check: controller/display, aircraft, app, SD/storage, camera feed, and battery status.",
+              "position": 140737488568320
+            },
+            {
+              "id": "6907a015bc8975d77a7fe6f0",
+              "text": "Insert SD card or memory device with adequate free space for mission.",
+              "position": 140737488584704
+            },
+            {
+              "id": "69ef9df5d4e1b2ef09dcd0e6",
+              "text": " Confirm SD card/storage has been formatted or cleared after backup.",
+              "position": 140737488592896
+            },
+            {
+              "id": "69ef9df51d9866fb6a6ddabd",
+              "text": " Confirm aircraft, controller, tablet, and app can connect before departure.",
+              "position": 140737488596992
+            },
+            {
+              "id": "69ef9df46e66802dd8914760",
+              "text": "Confirm required field kit is packed: landing pad, cones/signs, PPE, fire extinguisher, radio, chargers, spare props, tools.",
+              "position": 140737488633856
+            },
+            {
+              "id": "6907a07870930a07f1c24a1c",
+              "text": "Shut down in proper sequence and pack aircraft, batteries, controller, tablet, payload, SD cards, and field kit securely.",
+              "position": 140737488715776
+            }
+          ]
+        },
+        {
+          "id": "6906229ce250ae549dfe30de",
+          "name": "On-Site Physical Inspection/Setup",
+          "position": 140737488355328,
+          "items": [
+            {
+              "id": "69079fe05c8e136ebb181228",
+              "text": "Confirm visual line-of-sight, clear takeoff/landing areas (minimum 25 ft. free radius), identify emergency recovery zones.",
+              "position": 140737488338944
+            },
+            {
+              "id": "6907a08dca80a71faf0890fc",
+              "text": "Remove gimbal cover",
+              "position": 140737488347136
+            },
+            {
+              "id": "6907a0866114b6f378b31e0a",
+              "text": "Power up remote, display device, and then aircraft (in recommended sequence).",
+              "position": 140737488355328
+            },
+            {
+              "id": "6907a09f3a23a44638b9030b",
+              "text": "Confirm no firmware/software incompatibility warnings before flight. (Dronelogbook log update).",
+              "position": 140737488371712
+            },
+            {
+              "id": "6907a0a740b784a30ec4b519",
+              "text": "Verify RTH altitude set above highest local obstacle; set home point to accurate location (controller/app).",
+              "position": 140737488388096
+            },
+            {
+              "id": "6907a0adc7dceba55a7ef695",
+              "text": "Calibrate compass, IMU, and gimbal only if requested by app, abnormal behavior is observed, or operating conditions require it.",
+              "position": 140737488404480
+            },
+            {
+              "id": "6907a0b44ce9c683e7bf1199",
+              "text": "Confirm GPS lock with sufficient satellites and green status on controller/app.",
+              "position": 140737488420864
+            },
+            {
+              "id": "6907a0ba78c6b53ad0c647f8",
+              "text": "Check all sensors, IMU, obstacle avoidance, and transmission signal strength.",
+              "position": 140737488437248
+            },
+            {
+              "id": "6907a0c358dd9708437d3c10",
+              "text": "Test camera FPV (live transmission, calibration, and lens cleaning).",
+              "position": 140737488453632
+            },
+            {
+              "id": "6907a0c885f93690f0518392",
+              "text": "Review all error messages, and confirm “no warnings” state.",
+              "position": 140737488470016
+            },
+            {
+              "id": "69ef9e821d9866fb6a6f17bc",
+              "text": "Confirm site access and notify property owner/client/contact as needed.",
+              "position": 140737488486400
+            },
+            {
+              "id": "69ef9e82323557d7fac1fc25",
+              "text": " Conduct site hazard scan: people, vehicles, animals, trees, wires, towers, terrain, reflective surfaces, water, dust, loose debris.",
+              "position": 140737488502784
+            },
+            {
+              "id": "69ef9e8202f5a4d361a51509",
+              "text": " Identify emergency landing / recovery zones.",
+              "position": 140737488519168
+            },
+            {
+              "id": "69ef9e8349ac672fa2ddc82e",
+              "text": " Confirm takeoff/landing zone is stable, level, and clear of loose debris.",
+              "position": 140737488535552
+            },
+            {
+              "id": "69ef9e8384bd9d2f4dae603d",
+              "text": " Unfold arms and verify arms are locked.",
+              "position": 140737488551936
+            },
+            {
+              "id": "69ef9e83bd300149072d23a4",
+              "text": " Verify motor mounts are secure.",
+              "position": 140737488568320
+            },
+            {
+              "id": "69ef9e84387f90540fdcdfa0",
+              "text": " Verify propellers are correct, undamaged, properly seated, and tightened.",
+              "position": 140737488584704
+            },
+            {
+              "id": "69ef9e84829fe8fab681a3ee",
+              "text": " Verify payload/gimbal/camera/sensor is secure.",
+              "position": 140737488601088
+            },
+            {
+              "id": "69ef9e846a85d01ab6941609",
+              "text": " Clean lens, camera, thermal sensor, obstacle sensors, and lights as needed.",
+              "position": 140737488617472
+            },
+            {
+              "id": "69ef9e856f2c3392e2373fc5",
+              "text": " Confirm home point is accurate.",
+              "position": 140737488633856
+            },
+            {
+              "id": "69ef9e85fdd35ef2945ac03b",
+              "text": " Confirm geofence, max altitude, max distance, RTH, low-battery, and failsafe settings.",
+              "position": 140737488650240
+            },
+            {
+              "id": "69ef9e851d24c5c76c881af4",
+              "text": " Confirm aircraft status is green/ready.",
+              "position": 140737488666624
+            }
+          ]
+        },
+        {
+          "id": "6907a0dea97838ce1c3cd84c",
+          "name": "Crew, Mission, and Automation",
+          "position": 140737488371712,
+          "items": [
+            {
+              "id": "6907a0e5a4b9a5af14f0f055",
+              "text": "Brief all team members on mission plan, emergency/abort procedures, and assign roles.",
+              "position": 140737488355328
+            },
+            {
+              "id": "6907a0ec3bb34fb07af90c81",
+              "text": "Review and verify waypoints/uploaded mission data for autonomous flights (if applicable).",
+              "position": 140737488371712
+            },
+            {
+              "id": "6907a0f42aeeb5471d736517",
+              "text": "Confirm DroneLogbook logging is active or ready before launch.",
+              "position": 140737488388096
+            },
+            {
+              "id": "6907a11c9db2fdf5a5160cd6",
+              "text": "Set up warning signs and secure launch & control area",
+              "position": 140737488404480
+            },
+            {
+              "id": "6907a12ea30d62b2de5083e0",
+              "text": "Don safety vests, eyewear, and helmets.",
+              "position": 140737488420864
+            },
+            {
+              "id": "6907a14d7cf73bc45dbbe93a",
+              "text": "Make sure Lithium fire extinguisher is on site and current.",
+              "position": 140737488437248
+            },
+            {
+              "id": "6907a18c98fae9b0e508d5cd",
+              "text": "Make sure aviation radio is scanning the local frequencies.",
+              "position": 140737488453632
+            },
+            {
+              "id": "69ef9f078b6be67640cb08db",
+              "text": "Complete IM SAFE self-check: Illness, Medication, Stress, Alcohol, Fatigue, Emotion.",
+              "position": 140737488470016
+            },
+            {
+              "id": "69ef9f073e946cf59fe47573",
+              "text": " Confirm RPIC and visual observer roles if more than one person is present.",
+              "position": 140737488486400
+            },
+            {
+              "id": "69ef9f08250d5cdc34ee5c87",
+              "text": " Brief client/bystanders on safe distance and no-entry area if applicable.",
+              "position": 140737488502784
+            },
+            {
+              "id": "69ef9f089af408d6fcbfc9f6",
+              "text": " Review planned altitude, flight path, duration, and mission objective.",
+              "position": 140737488519168
+            },
+            {
+              "id": "69ef9f08805957fcef10b7fc",
+              "text": " Review communication callouts: “Spooling Motors,” “Taking Off,” “Landing,” “Lost Link,” “RTH Activated.”",
+              "position": 140737488535552
+            },
+            {
+              "id": "69ef9f0936b41b36caa7acba",
+              "text": " Confirm max altitude, max distance, geofence, RTH, low-battery, and failsafe settings.",
+              "position": 140737488551936
+            },
+            {
+              "id": "69ef9f099fbfe0c08e7a27a6",
+              "text": " Confirm automated waypoint mission is loaded, reviewed, and matches the intended site.",
+              "position": 140737488568320
+            },
+            {
+              "id": "69ef9f0963ee92fd607108ea",
+              "text": " Confirm abort/mission pause procedure for autonomous flights.",
+              "position": 140737488584704
+            },
+            {
+              "id": "69ef9f0aa589d81744402a58",
+              "text": " Confirm nearby aviation frequency monitoring is required or not required for this site.",
+              "position": 140737488601088
+            }
+          ]
+        },
+        {
+          "id": "6907a1023439bb7503c709d7",
+          "name": "Final Go/No-Go and Launch",
+          "position": 140737488388096,
+          "items": [
+            {
+              "id": "6907a10eef67507e927a49d3",
+              "text": "Last visual scan for hazards, bystanders, and overhead obstacles.",
+              "position": 140737488355328
+            },
+            {
+              "id": "6907a15849f9b2a6e4724419",
+              "text": "Set flight mode (P/N/S), failsafe behavior, RTH settings, and abort procedure.",
+              "position": 140737488371712
+            },
+            {
+              "id": "6907a16134a37dc6bdf53978",
+              "text": "Begin flight log/record in Airdata UAV and/or Dronelogbook.",
+              "position": 140737488388096
+            },
+            {
+              "id": "6907a168b52e0f40e8a3a57a",
+              "text": "Start motors, perform short hover test (check for abnormal noise/vibration), verify full telemetry (battery, satellites, camera, GPS, transmission).",
+              "position": 140737488404480
+            },
+            {
+              "id": "6907a170649565c1a67e9d0a",
+              "text": "Confirm “Ready for Flight” via checklist, and commence mission.",
+              "position": 140737488420864
+            },
+            {
+              "id": "69ef9f4d900c514b3cbdaf79",
+              "text": "Confirm weather still remains within mission limits.",
+              "position": 140737488437248
+            },
+            {
+              "id": "69ef9f4d4a3613c4dd02fb9e",
+              "text": " Confirm battery level and estimated mission time are sufficient.",
+              "position": 140737488453632
+            },
+            {
+              "id": "69ef9f4dfea0a812a774e0be",
+              "text": " Confirm controller signal, GPS, camera feed, storage, and telemetry are normal.",
+              "position": 140737488470016
+            },
+            {
+              "id": "69ef9f4e39ada49d3f7a063d",
+              "text": " Announce: “Spooling Motors.”",
+              "position": 140737488486400
+            },
+            {
+              "id": "69ef9f4ec5399376edab91d5",
+              "text": " Start motors and verify normal sound/propeller behavior.",
+              "position": 140737488502784
+            },
+            {
+              "id": "69ef9f4e51288f72df0c19e4",
+              "text": " Announce: “Taking Off.”",
+              "position": 140737488519168
+            },
+            {
+              "id": "69ef9f4f3d8be7f3cbde8c74",
+              "text": " Take off and climb to approximately 10 feet.",
+              "position": 140737488535552
+            },
+            {
+              "id": "69ef9f4fd7565fd7e4e45073",
+              "text": " Perform control check: yaw, pitch, roll, climb, descend.",
+              "position": 140737488551936
+            },
+            {
+              "id": "69ef9f502586972350de2307",
+              "text": " Confirm aircraft is stable with no abnormal vibration, drift, warnings, or control issues.",
+              "position": 140737488568320
+            },
+            {
+              "id": "69ef9f5036ed7d3e49fc1388",
+              "text": " Commence mission.",
+              "position": 140737488584704
+            }
+          ]
+        },
+        {
+          "id": "69ef9db2a7a2eca1407ef901",
+          "name": "In-Flight Monitoring",
+          "position": 140737488404480,
+          "items": [
+            {
+              "id": "69ef9f8d597f02bfdb7cdceb",
+              "text": "Maintain visual line of sight.",
+              "position": 140737488355328
+            },
+            {
+              "id": "69ef9f8dab00b485052feb35",
+              "text": " Continuously scan airspace and ground for aircraft, birds, people, vehicles, wires, and changing hazards.",
+              "position": 140737488371712
+            },
+            {
+              "id": "69ef9f8db8b35c0cbc374f9e",
+              "text": " Monitor battery percentage, voltage behavior, and remaining flight time.",
+              "position": 140737488388096
+            },
+            {
+              "id": "69ef9f8dc8c4b2e29adb53d7",
+              "text": " Monitor GPS, IMU, compass, control link, and transmission strength.",
+              "position": 140737488404480
+            },
+            {
+              "id": "69ef9f8e862431bdea01f117",
+              "text": " Monitor wind, gusts, and aircraft behavior.",
+              "position": 140737488420864
+            },
+            {
+              "id": "69ef9f8e15e811e87bbc84a8",
+              "text": " Monitor nearby aviation frequencies if applicable.",
+              "position": 140737488437248
+            },
+            {
+              "id": "69ef9f8e6986698fbb79d7f4",
+              "text": " Confirm required photos/video/thermal/mapping/inspection data are being captured.",
+              "position": 140737488453632
+            },
+            {
+              "id": "69ef9f8f133e2371a0efa699",
+              "text": " Pause or abort mission if aircraft, environment, people, or data quality becomes unsafe/unacceptable.",
+              "position": 140737488470016
+            },
+            {
+              "id": "69ef9f8f71c2f883a33db50c",
+              "text": " Complete planned mission.",
+              "position": 140737488486400
+            }
+          ]
+        },
+        {
+          "id": "69ef9dc78a42734ef84f96ab",
+          "name": "Landing + Shutdown",
+          "position": 140737488420864,
+          "items": [
+            {
+              "id": "69ef9f9e907553a37d9ffff8",
+              "text": "Return aircraft to landing area with adequate battery reserve.",
+              "position": 140737488355328
+            },
+            {
+              "id": "69ef9f9fd3913bccb5410907",
+              "text": " Hover around 10 feet and orient aircraft away from RPIC/crew where practical.",
+              "position": 140737488371712
+            },
+            {
+              "id": "69ef9f9f420dc0264253ab44",
+              "text": " Confirm landing area is clear.",
+              "position": 140737488388096
+            },
+            {
+              "id": "69ef9f9fb0868eb4f498458a",
+              "text": " Announce: “Landing.”",
+              "position": 140737488404480
+            },
+            {
+              "id": "69ef9fa0a978b790926ba531",
+              "text": " Descend smoothly while maintaining aircraft over landing zone.",
+              "position": 140737488420864
+            },
+            {
+              "id": "69ef9fa0a9ee667fb831be61",
+              "text": " Once aircraft touches down, reduce throttle to zero; do not manipulate other controls.",
+              "position": 140737488437248
+            },
+            {
+              "id": "69ef9fa0b9b1316deceadf1c",
+              "text": " Disarm aircraft.",
+              "position": 140737488453632
+            },
+            {
+              "id": "69ef9fa12aa89b44e55f4ae3",
+              "text": " Announce: “Disarmed.”",
+              "position": 140737488470016
+            },
+            {
+              "id": "69ef9fa271c2f883a33df052",
+              "text": " Power off aircraft.",
+              "position": 140737488486400
+            },
+            {
+              "id": "69ef9fa22b15d9977283e2a1",
+              "text": " Remove aircraft from landing pad.",
+              "position": 140737488502784
+            },
+            {
+              "id": "69ef9fa255a33afe7056e7a9",
+              "text": " Install gimbal/camera cover as appropriate.",
+              "position": 140737488519168
+            },
+            {
+              "id": "69ef9fa31212abf0672072b2",
+              "text": " Remove propellers if applicable.",
+              "position": 140737488535552
+            },
+            {
+              "id": "69ef9fa3d4cbea3efa8cfce4",
+              "text": " Power off controller.",
+              "position": 140737488551936
+            },
+            {
+              "id": "69ef9fa4608a220c4693e2c6",
+              "text": " Power off tablet/mobile device.",
+              "position": 140737488568320
+            },
+            {
+              "id": "69ef9fa40e9c72fe98c729df",
+              "text": " Secure aircraft, batteries, SD cards, and field kit.",
+              "position": 140737488584704
+            }
+          ]
+        },
+        {
+          "id": "69ef9dd16644df1d806a5463",
+          "name": "Post-Flight / Data / Maintenance",
+          "position": 140737488437248,
+          "items": [
+            {
+              "id": "69ef9fab9612ec788a86fd70",
+              "text": "Inspect aircraft, props, motors, gimbal, camera, sensors, and landing gear for damage or debris.",
+              "position": 140737488355328
+            },
+            {
+              "id": "69ef9fabebd5503f48bfce67",
+              "text": " Check battery temperature and condition after flight.",
+              "position": 140737488371712
+            },
+            {
+              "id": "69ef9fab278cbe0f5832a750",
+              "text": " Mark batteries used and record cycle/performance notes if needed.",
+              "position": 140737488388096
+            },
+            {
+              "id": "69ef9fac8f5a392ae74e572d",
+              "text": " Confirm photos/video/mission data were captured before leaving site.",
+              "position": 140737488404480
+            },
+            {
+              "id": "69ef9fac539ce8c202b423f8",
+              "text": " Back up SD card / mission data as soon as practical.",
+              "position": 140737488420864
+            },
+            {
+              "id": "69ef9fad36e8bf303920c80d",
+              "text": " Upload or sync logs to Airdata UAV and/or DroneLogbook.",
+              "position": 140737488437248
+            },
+            {
+              "id": "69ef9fadd4bf7360b2c8ee8a",
+              "text": " Record actual flight time, location, weather, crew, aircraft, battery IDs, and anomalies.",
+              "position": 140737488453632
+            },
+            {
+              "id": "69ef9fad4d29208cc9893c55",
+              "text": " Document incidents, near misses, client issues, or maintenance needs.",
+              "position": 140737488470016
+            },
+            {
+              "id": "69ef9fae7e82e04c7c8f0686",
+              "text": " Recharge batteries according to storage/next-mission requirements.",
+              "position": 140737488486400
+            },
+            {
+              "id": "69ef9faefa41cbdcde7314e7",
+              "text": " Reset kit for next mission.",
+              "position": 140737488502784
+            }
+          ]
+        },
+        {
+          "id": "69ef9ddbb8d524b7fa6131a3",
+          "name": "Emergency Procedures",
+          "position": 140737488453632,
+          "items": [
+            {
+              "id": "69ef9fb77a128f888b861bc3",
+              "text": "Announce: “Lost Link.”",
+              "position": 140737488355328
+            },
+            {
+              "id": "69ef9fb8633f69556a49c21a",
+              "text": " Verify RTH behavior if automatic RTH initiates.",
+              "position": 140737488371712
+            },
+            {
+              "id": "69ef9fb854f341b275aaf3ca",
+              "text": " Activate RTH if appropriate and not already triggered.",
+              "position": 140737488388096
+            },
+            {
+              "id": "69ef9fb8991d2865fe8a33e5",
+              "text": " Monitor aircraft direction, altitude, and speed.",
+              "position": 140737488404480
+            },
+            {
+              "id": "69ef9fb81872d8cfb21643c6",
+              "text": " Confirm landing area is clear.",
+              "position": 140737488420864
+            },
+            {
+              "id": "69ef9fb93d97b34e7ba6d2e9",
+              "text": " Announce: “Returning to Home.”",
+              "position": 140737488437248
+            },
+            {
+              "id": "69ef9fb966b95b160df80fe5",
+              "text": " Announce: “Landing.”",
+              "position": 140737488453632
+            },
+            {
+              "id": "69ef9fb9f51dfe54e14c6ae7",
+              "text": " Wait until aircraft lands and disarms.",
+              "position": 140737488470016
+            },
+            {
+              "id": "69ef9fba28a955a1d9c1499a",
+              "text": " Announce: “Disarmed.”",
+              "position": 140737488486400
+            },
+            {
+              "id": "69ef9fba7a52c0e912ea5c87",
+              "text": " Power down aircraft.",
+              "position": 140737488502784
+            },
+            {
+              "id": "69ef9fba801a7b6764f9b806",
+              "text": " Investigate interference, controller/app errors, antenna orientation, and C2 issues.",
+              "position": 140737488519168
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "parrot-anafi-usa",
+      "name": "Parrot ANAFI USA",
+      "cardId": "6907a23092f983958a5d06f2",
+      "cardUrl": "https://trello.com/c/n4RDKJtB/3-parrot-anafi-usa",
+      "description": "Copy this template for every mission",
+      "checklists": [
+        {
+          "id": "69efc190e2709d15e80a6444",
+          "name": "Office / Pre-Departure Planning",
+          "position": 140737488355328,
+          "items": [
+            {
+              "id": "69efc1a7fe23e9dd447a1f8f",
+              "text": "Review NOTAMs, TFRs, and local airspace status for every planned flight location.",
+              "position": 140737488355328
+            },
+            {
+              "id": "69efc1a86f59462ca35e6e06",
+              "text": " Obtain LAANC airspace authorization or other required operational approvals; save/screenshot reference number.",
+              "position": 140737488371712
+            },
+            {
+              "id": "69efc1a8680fac239b321f80",
+              "text": " Verify drone registration, Remote ID status if applicable, Part 107 certificate, and proof of insurance coverage.",
+              "position": 140737488388096
+            },
+            {
+              "id": "69efc1a835329cd7ece5e64b",
+              "text": " Review and prepare documentation: insurance, waivers, permits, flight authorizations, site access notes.",
+              "position": 140737488404480
+            },
+            {
+              "id": "69efc1a8dea84cff74dec268",
+              "text": " Confirm scheduled mission details, location, client/contact, crew, and participants.",
+              "position": 140737488420864
+            },
+            {
+              "id": "69efc1a9ae9ca8fe1d53a0d1",
+              "text": " Notify property owner, client, team, or relevant authorities of planned activity as needed.",
+              "position": 140737488437248
+            },
+            {
+              "id": "69efc1a9c556f418b87b05b9",
+              "text": " Confirm mission deliverables: visual photos, video, thermal imagery, zoom inspection, mapping, facility shots, client-specific views.",
+              "position": 140737488453632
+            },
+            {
+              "id": "69efc1a9321a8687ad608bf5",
+              "text": " Confirm ANAFI USA GOV, Skycontroller USA, FreeFlight 6 USA, and batteries are assigned for this mission.",
+              "position": 140737488470016
+            },
+            {
+              "id": "69efc1a9f4be142f7f5fb270",
+              "text": " Confirm firmware/software compatibility before leaving; avoid field updates unless required.",
+              "position": 140737488486400
+            },
+            {
+              "id": "69efc1aa606b63b734456657",
+              "text": " If operating offline, confirm required FreeFlight 6 USA APK/update files are available if needed.",
+              "position": 140737488502784
+            },
+            {
+              "id": "69efc1aac0e481f3f945ede4",
+              "text": " Review and finalize flight plan, launch area, landing area, emergency recovery zones, RTH behavior, and failsafe assumptions.",
+              "position": 140737488519168
+            },
+            {
+              "id": "69efc1aaa8f8d80d59114fc2",
+              "text": " Confirm whether automated/assisted flight modes will be used.",
+              "position": 140737488535552
+            },
+            {
+              "id": "69efc1abcc0d6fd30cae9c40",
+              "text": " If using automated/assisted flight modes, confirm GPS availability is expected and the mission starts from a wide open area.",
+              "position": 140737488551936
+            },
+            {
+              "id": "69efc1abab00b485056be825",
+              "text": " Check local weather forecast: wind, gusts, visibility, precipitation, lightning, temperature, and no-go windows.",
+              "position": 140737488568320
+            },
+            {
+              "id": "69efc1ac1dab4dae09123a03",
+              "text": " Record METAR/TAF or weather source for DroneLogbook/mission log.",
+              "position": 140737488584704
+            },
+            {
+              "id": "69efc1ac0d463266a506a336",
+              "text": " Ensure ANAFI USA batteries, Skycontroller USA, tablet/display, phone, and backup devices are charged.",
+              "position": 140737488601088
+            },
+            {
+              "id": "69efc1ac94cf0366c4c5ba62",
+              "text": " Check ANAFI USA battery condition: no swelling, cracks, damage, moisture, or abnormal behavior.",
+              "position": 140737488617472
+            },
+            {
+              "id": "69efc1ad5b712b45a9f98a3a",
+              "text": " Confirm ANAFI USA batteries are awake from storage/wintering mode and fully charged if they have been unused for an extended period.",
+              "position": 140737488633856
+            },
+            {
+              "id": "69efc1ade6b7ffe3865ad42e",
+              "text": " Inspect aircraft body, arms, motor mounts, landing feet, gimbal, camera, thermal sensor, vertical camera, ultrasonic sensor, and propellers.",
+              "position": 140737488650240
+            },
+            {
+              "id": "69efc1addadfb64ae279db63",
+              "text": " Confirm propellers are intact, correctly installed, free to rotate, and fully screwed on.",
+              "position": 140737488666624
+            },
+            {
+              "id": "69efc1aed340bb24b84ac068",
+              "text": " Confirm no unauthorized accessories/add-ons are attached that could affect weight, communications, motors, or center of gravity.",
+              "position": 140737488683008
+            },
+            {
+              "id": "69efc1aee30521ab0046349e",
+              "text": " Confirm microSD card is inserted, compatible, formatted/cleared after backup, and has adequate free space.",
+              "position": 140737488699392
+            },
+            {
+              "id": "69efc1ae637fb00c0faf4d90",
+              "text": " Confirm FDR/log file preservation process if an incident occurs.",
+              "position": 140737488715776
+            },
+            {
+              "id": "69efc1af027fc90bbc9a3430",
+              "text": " Perform office power/connectivity check: Skycontroller USA, FreeFlight 6 USA, aircraft, microSD/storage, camera feed, thermal feed, battery status.",
+              "position": 140737488732160
+            },
+            {
+              "id": "69efc1af9dc894458b767470",
+              "text": " Confirm Skycontroller USA and ANAFI USA are paired.",
+              "position": 140737488748544
+            },
+            {
+              "id": "69efc1afad79bf85c12ffad8",
+              "text": " Confirm required field kit is packed: landing pad, cones/signs, PPE, lithium fire extinguisher, aviation radio, chargers, spare props, tools, USB cables, cleaning cloth, tablet shade.",
+              "position": 140737488764928
+            },
+            {
+              "id": "69efc1b0cca51862ca7d6505",
+              "text": " Shut down in proper sequence and pack aircraft, batteries, Skycontroller USA, tablet, SD cards, and field kit securely.",
+              "position": 140737488781312
+            }
+          ]
+        },
+        {
+          "id": "69efc1c21ef83fcaf3632c7f",
+          "name": "On-Site Physical Inspection / Setup",
+          "position": 140737488371712,
+          "items": [
+            {
+              "id": "69efc1f73926959d039cee19",
+              "text": "Confirm site access and notify property owner/client/contact upon arrival if needed.",
+              "position": 140737488355328
+            },
+            {
+              "id": "69efc1f806a8367f5a3963a1",
+              "text": " Conduct site hazard scan: people, vehicles, animals, birds, trees, wires, towers, terrain, water, reflective surfaces, dust, loose debris, metal structures, and RF interference sources.",
+              "position": 140737488371712
+            },
+            {
+              "id": "69efc1f86d5047db932df9cc",
+              "text": " Confirm visual line of sight can be maintained throughout the mission.",
+              "position": 140737488388096
+            },
+            {
+              "id": "69efc1f8704398d36c419720",
+              "text": " Confirm takeoff/landing zone is stable, level, clear, and at least 25 ft. free radius where practical.",
+              "position": 140737488404480
+            },
+            {
+              "id": "69efc1f8fea4974c7314f11e",
+              "text": " Identify emergency landing/recovery zones.",
+              "position": 140737488420864
+            },
+            {
+              "id": "69efc1f99e12fef1d05c1274",
+              "text": " Set up launch/control area with cones, signs, or safety perimeter as needed.",
+              "position": 140737488437248
+            },
+            {
+              "id": "69efc1f904b6946bee0f8ea0",
+              "text": " Don PPE: safety vest, eye protection, helmet if required.",
+              "position": 140737488453632
+            },
+            {
+              "id": "69efc1f90ba343499a5f58f8",
+              "text": " Confirm lithium fire extinguisher is on site and current.",
+              "position": 140737488470016
+            },
+            {
+              "id": "69efc1f9944463c6307799d7",
+              "text": " Turn on aviation radio / monitor nearby airport frequencies if applicable.",
+              "position": 140737488486400
+            },
+            {
+              "id": "69efc1fab05a1c37ddafd5f4",
+              "text": " Position ANAFI USA on a flat, even, clear surface.",
+              "position": 140737488502784
+            },
+            {
+              "id": "69efc1fa234edbf10d96bdc3",
+              "text": " Remove gimbal protective cover.",
+              "position": 140737488519168
+            },
+            {
+              "id": "69efc1fa538861b1cc9e1f1e",
+              "text": " Unfold ANAFI USA arms and verify arms are locked.",
+              "position": 140737488535552
+            },
+            {
+              "id": "69efc1fbc52bf4e78d818328",
+              "text": " Verify propellers are correct, undamaged, properly installed, free, and fully screwed on.",
+              "position": 140737488551936
+            },
+            {
+              "id": "69efc1fb23087e70946ed627",
+              "text": " Verify ANAFI USA battery is seated and all battery hooks are engaged.",
+              "position": 140737488568320
+            },
+            {
+              "id": "69efc1fbf81df2ef049b6958",
+              "text": " Power on Skycontroller USA.",
+              "position": 140737488584704
+            },
+            {
+              "id": "69efc1fb4c5dd62a165ddc64",
+              "text": " Confirm FreeFlight 6 USA launches properly on Skycontroller USA.",
+              "position": 140737488601088
+            },
+            {
+              "id": "69efc1fc512884c29c8758ac",
+              "text": " Power on ANAFI USA by holding aircraft power button.",
+              "position": 140737488617472
+            },
+            {
+              "id": "69efc1fc3e556dcb5f6a0eb1",
+              "text": " Confirm Skycontroller USA and ANAFI USA connect successfully.",
+              "position": 140737488633856
+            },
+            {
+              "id": "69efc1fc80c9266b7ee9d4d6",
+              "text": " Confirm microSD card is recognized and available storage is sufficient.",
+              "position": 140737488650240
+            },
+            {
+              "id": "69efc1fd9b277fe33498b285",
+              "text": " Confirm aircraft, Skycontroller USA, and FreeFlight 6 USA show no required update or incompatibility warning.",
+              "position": 140737488666624
+            },
+            {
+              "id": "69efc1fd95d709667b9d08d8",
+              "text": " Confirm aircraft status is ready/green.",
+              "position": 140737488683008
+            },
+            {
+              "id": "69efc1fe267e7069eac3c9c9",
+              "text": " Confirm GPS synchronization if flying outdoors, at night, or using automated/assisted flight modes.",
+              "position": 140737488699392
+            },
+            {
+              "id": "69efc1fe018029b158bcd3ec",
+              "text": " If flying without GPS, confirm ground texture and lighting are sufficient for optical flow/vertical camera stabilization.",
+              "position": 140737488715776
+            },
+            {
+              "id": "69efc1fe8c630ecb9fc35c30",
+              "text": " Confirm home point / precise home status if available.",
+              "position": 140737488732160
+            },
+            {
+              "id": "69efc1ff68f69f4fa98bd9a6",
+              "text": " Confirm RTH height is appropriate for the site and above highest local obstacle.",
+              "position": 140737488748544
+            },
+            {
+              "id": "69efc1ffac72ea9e3a18493e",
+              "text": " Confirm max altitude, max distance, geofence, RTH, low-battery Smart RTH, and failsafe settings.",
+              "position": 140737488764928
+            },
+            {
+              "id": "69efc200228180de2526c269",
+              "text": " Calibrate ANAFI USA, Skycontroller USA, magnetometer, gimbal, camera, or thermal sensor only if requested by FreeFlight 6 USA or required by observed behavior.",
+              "position": 140737488781312
+            },
+            {
+              "id": "69efc200b99e8586dd5759e9",
+              "text": " Confirm thermal calibration status if using thermal imaging.",
+              "position": 140737488797696
+            },
+            {
+              "id": "69efc200644b4654a3871804",
+              "text": " Confirm camera/gimbal status and horizon alignment.",
+              "position": 140737488814080
+            },
+            {
+              "id": "69efc20149a66ca6610ef243",
+              "text": " Clean lens, thermal sensor, vertical camera, ultrasonic sensor, lights, and exposed surfaces as needed.",
+              "position": 140737488830464
+            },
+            {
+              "id": "69efc20239ada49d3fbfe64f",
+              "text": " Test visual camera feed.",
+              "position": 140737488846848
+            },
+            {
+              "id": "69efc2027ba670b4f06243eb",
+              "text": " Test thermal camera feed.",
+              "position": 140737488863232
+            },
+            {
+              "id": "69efc202cd6d191cff7b42c5",
+              "text": " Test zoom/inspection view if mission requires it.",
+              "position": 140737488879616
+            },
+            {
+              "id": "69efc203ad7aeecf9fcbbdd9",
+              "text": " Confirm Skycontroller antennas are oriented toward ANAFI USA and expected C2/Wi-Fi link path is clear.",
+              "position": 140737488896000
+            },
+            {
+              "id": "69efc2039926dcefccec9cc6",
+              "text": " Review all error messages and confirm no unresolved warnings.",
+              "position": 140737488912384
+            }
+          ]
+        },
+        {
+          "id": "69efc21134db1a417fe25fc8",
+          "name": "Crew, Mission, and Automation",
+          "position": 140737488388096,
+          "items": [
+            {
+              "id": "69efc2181e5a5252e3264895",
+              "text": "Complete IM SAFE self-check.",
+              "position": 140737488355328
+            },
+            {
+              "id": "69efc218ff8779b24a6b12b3",
+              "text": " Confirm RPIC.",
+              "position": 140737488371712
+            },
+            {
+              "id": "69efc2182caaf4d4e3eab584",
+              "text": " Confirm visual observer role if more than one person is present.",
+              "position": 140737488388096
+            },
+            {
+              "id": "69efc218bce3c3b972b44d49",
+              "text": " Brief all crew on mission plan, operating area, altitude, duration, emergency/abort procedures, and roles.",
+              "position": 140737488404480
+            },
+            {
+              "id": "69efc21943b75d3c896c2ba5",
+              "text": " Brief client/bystanders on safe distance and no-entry area if applicable.",
+              "position": 140737488420864
+            },
+            {
+              "id": "69efc219761a439f92c5cea8",
+              "text": " Review planned flight path, inspection targets, photo/video/thermal requirements, and mission objective.",
+              "position": 140737488437248
+            },
+            {
+              "id": "69efc2192872e2423951603a",
+              "text": " Review communication callouts: “Spooling Motors,” “Taking Off,” “Landing,” “Lost Link,” “RTH Activated,” “Emergency Landing.”",
+              "position": 140737488453632
+            },
+            {
+              "id": "69efc219ecda838ffbe6c711",
+              "text": " Confirm DroneLogbook logging is active or ready before launch.",
+              "position": 140737488470016
+            },
+            {
+              "id": "69efc21a4be84a17402ff3f0",
+              "text": " Confirm Airdata or other telemetry/logging workflow if used.",
+              "position": 140737488486400
+            },
+            {
+              "id": "69efc21a06f0640444c45165",
+              "text": " Review and verify waypoints/uploaded mission data for autonomous flights if applicable.",
+              "position": 140737488502784
+            },
+            {
+              "id": "69efc21a34e915d97aa4527f",
+              "text": " Confirm automated/assisted mission starts and ends from a wide open area when practical.",
+              "position": 140737488519168
+            },
+            {
+              "id": "69efc21b80c4b981d10e6d63",
+              "text": " Confirm abort/mission pause procedure for automated/assisted flights.",
+              "position": 140737488535552
+            },
+            {
+              "id": "69efc21bae8d7f9954639e88",
+              "text": " Confirm nearby aviation frequency monitoring is required or not required for this site.",
+              "position": 140737488551936
+            },
+            {
+              "id": "69efc21bae475aa1c6146b1c",
+              "text": " Confirm privacy, data handling, and client-sensitive capture boundaries.",
+              "position": 140737488568320
+            },
+            {
+              "id": "69efc21c88b6f214eb66bdbd",
+              "text": " Confirm no one is within unsafe proximity of the aircraft or launch zone.",
+              "position": 140737488584704
+            }
+          ]
+        },
+        {
+          "id": "69efc229efcdc02ed1d93447",
+          "name": "Final Go / No-Go and Launch",
+          "position": 140737488404480,
+          "items": [
+            {
+              "id": "69efc2336d5047db932ec2d7",
+              "text": "Final scan for hazards, bystanders, animals, vehicles, aircraft, wires, towers, and overhead obstacles.",
+              "position": 140737488355328
+            },
+            {
+              "id": "69efc2337ca04a2e3535dda6",
+              "text": " Confirm weather remains within mission limits.",
+              "position": 140737488371712
+            },
+            {
+              "id": "69efc2342081aa8eaa2a3a1f",
+              "text": " Confirm battery level and estimated mission time are sufficient.",
+              "position": 140737488388096
+            },
+            {
+              "id": "69efc23493440a754d50c50b",
+              "text": " Confirm Skycontroller USA battery level is sufficient.",
+              "position": 140737488404480
+            },
+            {
+              "id": "69efc23452d75929de16ff31",
+              "text": " Confirm aircraft battery is locked, healthy, and sufficient.",
+              "position": 140737488420864
+            },
+            {
+              "id": "69efc2341f888056b1ed6ad6",
+              "text": " Confirm controller signal / Wi-Fi link is good.",
+              "position": 140737488437248
+            },
+            {
+              "id": "69efc23513a159ec91163dce",
+              "text": " Confirm GPS, camera feed, thermal feed, storage, telemetry, and aircraft status are normal.",
+              "position": 140737488453632
+            },
+            {
+              "id": "69efc235ad53c8b3c2ff6e5c",
+              "text": " Confirm RTH height, home point, low-battery Smart RTH, and failsafe behavior.",
+              "position": 140737488470016
+            },
+            {
+              "id": "69efc235691200c2208e7443",
+              "text": " Confirm takeoff area is clear.",
+              "position": 140737488486400
+            },
+            {
+              "id": "69efc236a3e3f9fca3473185",
+              "text": " Announce: “Spooling Motors.”",
+              "position": 140737488502784
+            },
+            {
+              "id": "69efc2362849b5fb5d913374",
+              "text": " Press Take-off/Land or initiate takeoff through FreeFlight 6 USA as appropriate.",
+              "position": 140737488519168
+            },
+            {
+              "id": "69efc23655d4baf3d0f72e64",
+              "text": " Announce: “Taking Off.”",
+              "position": 140737488535552
+            },
+            {
+              "id": "69efc23799e2f96ca751627e",
+              "text": " Climb to approximately 10 feet.",
+              "position": 140737488551936
+            },
+            {
+              "id": "69efc23794bec74ddd9f8c91",
+              "text": " Perform hover check for abnormal noise, vibration, drift, warnings, or control issues.",
+              "position": 140737488568320
+            },
+            {
+              "id": "69efc2375ad8ce8a58844d20",
+              "text": " Perform control check: yaw, pitch, roll, climb, descend.",
+              "position": 140737488584704
+            },
+            {
+              "id": "69efc238f29640263d7be3ca",
+              "text": " Confirm camera/gimbal/thermal feed remains stable.",
+              "position": 140737488601088
+            },
+            {
+              "id": "69efc238e0ecc9a9568c38f8",
+              "text": " Confirm aircraft stable and telemetry normal.",
+              "position": 140737488617472
+            },
+            {
+              "id": "69efc2392b80eb89f126f0b9",
+              "text": " Commence mission.",
+              "position": 140737488633856
+            }
+          ]
+        },
+        {
+          "id": "69efc241de893a927fdbd85c",
+          "name": "In-Flight Monitoring",
+          "position": 140737488420864,
+          "items": [
+            {
+              "id": "69efc25357fe338fcded10db",
+              "text": "Maintain visual line of sight unless specifically authorized otherwise.",
+              "position": 140737488355328
+            },
+            {
+              "id": "69efc2538d4e94bac33e2081",
+              "text": " Continuously scan airspace and ground for aircraft, birds, people, vehicles, wires, and changing hazards.",
+              "position": 140737488371712
+            },
+            {
+              "id": "69efc254f7e82c8d92fd6c51",
+              "text": " Monitor ANAFI USA battery level, remaining flight time, and Smart RTH alerts.",
+              "position": 140737488388096
+            },
+            {
+              "id": "69efc25436aea41f6fc473eb",
+              "text": " Monitor Skycontroller USA battery level.",
+              "position": 140737488404480
+            },
+            {
+              "id": "69efc25489a3bab181c93a92",
+              "text": " Monitor Wi-Fi/C2 link strength and antenna orientation.",
+              "position": 140737488420864
+            },
+            {
+              "id": "69efc254a0fb2759e39337c7",
+              "text": " Monitor GPS, magnetometer/compass, IMU, and aircraft behavior.",
+              "position": 140737488437248
+            },
+            {
+              "id": "69efc255056995124207ed6a",
+              "text": " Monitor wind, gusts, drift, and aircraft stability.",
+              "position": 140737488453632
+            },
+            {
+              "id": "69efc255ae54895e6b805139",
+              "text": " Monitor nearby aviation frequencies if applicable.",
+              "position": 140737488470016
+            },
+            {
+              "id": "69efc256822b48dce0f8cfe1",
+              "text": " Confirm required photos/video/thermal/zoom/inspection data are being captured.",
+              "position": 140737488486400
+            },
+            {
+              "id": "69efc256b25fb61ade52f076",
+              "text": " Confirm thermal images are usable and recalibrate thermal if needed.",
+              "position": 140737488502784
+            },
+            {
+              "id": "69efc256eaf851c8ce94a938",
+              "text": " Confirm gimbal/camera horizon remains acceptable.",
+              "position": 140737488519168
+            },
+            {
+              "id": "69efc257bef5ea0527d2038a",
+              "text": " Pause or abort mission if aircraft, environment, people, battery, C2 link, or data quality becomes unsafe/unacceptable.",
+              "position": 140737488535552
+            },
+            {
+              "id": "69efc257847581e33c02d4dd",
+              "text": " Complete planned mission.",
+              "position": 140737488551936
+            }
+          ]
+        },
+        {
+          "id": "69efc2688c630ecb9fc4752f",
+          "name": "Landing + Shutdown",
+          "position": 140737488437248,
+          "items": [
+            {
+              "id": "69efc2770d18b4618b886cd6",
+              "text": "Return aircraft to landing area with adequate battery reserve.",
+              "position": 140737488355328
+            },
+            {
+              "id": "69efc277a402d2ffb2cebe33",
+              "text": " Hover around 10 feet and orient aircraft away from RPIC/crew where practical.",
+              "position": 140737488371712
+            },
+            {
+              "id": "69efc278ff9cddfc238e7da9",
+              "text": " Confirm landing area is clear.",
+              "position": 140737488388096
+            },
+            {
+              "id": "69efc278904ad9251360960b",
+              "text": " Announce: “Landing.”",
+              "position": 140737488404480
+            },
+            {
+              "id": "69efc2783dff6812214ed5b4",
+              "text": " Descend smoothly while maintaining aircraft over landing zone.",
+              "position": 140737488420864
+            },
+            {
+              "id": "69efc2799fda7c045739a0b0",
+              "text": " Once aircraft touches down, allow aircraft to settle.",
+              "position": 140737488437248
+            },
+            {
+              "id": "69efc27996f66932d920918f",
+              "text": " Disarm/stop motors.",
+              "position": 140737488453632
+            },
+            {
+              "id": "69efc27973aaa7aede90eb78",
+              "text": " Announce: “Disarmed.”",
+              "position": 140737488470016
+            },
+            {
+              "id": "69efc27a299eeb462b2539fa",
+              "text": " Power off ANAFI USA.",
+              "position": 140737488486400
+            },
+            {
+              "id": "69efc27ac27f94fd6ff07cfb",
+              "text": " Remove aircraft from landing pad.",
+              "position": 140737488502784
+            },
+            {
+              "id": "69efc27a0575420e8f9df777",
+              "text": " Install gimbal protective cover.",
+              "position": 140737488519168
+            },
+            {
+              "id": "69efc27be5214e619bec7cf2",
+              "text": " Inspect propellers before handling/packing.",
+              "position": 140737488535552
+            },
+            {
+              "id": "69efc27bb9f0590d8ecea568",
+              "text": " Power off Skycontroller USA.",
+              "position": 140737488551936
+            },
+            {
+              "id": "69efc27baf90dae9626fc365",
+              "text": " Secure aircraft, batteries, microSD card, Skycontroller USA, and field kit.",
+              "position": 140737488568320
+            },
+            {
+              "id": "69efc27c01d5fde367a58854",
+              "text": " Keep used batteries separated/identified for post-flight logging.",
+              "position": 140737488584704
+            }
+          ]
+        },
+        {
+          "id": "69efc28a876e3b532628f731",
+          "name": "Post-Flight / Data / Maintenance",
+          "position": 140737488453632,
+          "items": [
+            {
+              "id": "69efc297dfa47e5cc6f1ddbd",
+              "text": "Inspect aircraft body, arms, motor mounts, propellers, gimbal, visual camera, thermal sensor, vertical camera, ultrasonic sensor, and landing feet.",
+              "position": 140737488355328
+            },
+            {
+              "id": "69efc297616cc2b621c4919a",
+              "text": " Check battery temperature and condition after flight.",
+              "position": 140737488371712
+            },
+            {
+              "id": "69efc297dfc8c39795e68482",
+              "text": " Mark batteries used and record cycle/performance notes if needed.",
+              "position": 140737488388096
+            },
+            {
+              "id": "69efc298236cf989a522aada",
+              "text": " Confirm photos/video/thermal/mission data were captured before leaving site.",
+              "position": 140737488404480
+            },
+            {
+              "id": "69efc29831cf7b5da6d48af9",
+              "text": " Confirm client-required shots/views were completed.",
+              "position": 140737488420864
+            },
+            {
+              "id": "69efc29831a65c6e59330b61",
+              "text": " Back up microSD card / mission data as soon as practical.",
+              "position": 140737488437248
+            },
+            {
+              "id": "69efc29814044d31cba709d2",
+              "text": " Preserve FDR folder if there was a crash, abnormal event, error, or incident.",
+              "position": 140737488453632
+            },
+            {
+              "id": "69efc2992a25c5d38ebdd87f",
+              "text": " Upload or sync logs to DroneLogbook and/or Airdata as applicable.",
+              "position": 140737488470016
+            },
+            {
+              "id": "69efc299588fde4d67734f2f",
+              "text": " Record actual flight time, location, weather, crew, aircraft, battery IDs, anomalies, and maintenance notes.",
+              "position": 140737488486400
+            },
+            {
+              "id": "69efc2990db7d0d85319ab4b",
+              "text": " Document incidents, near misses, client issues, unsafe conditions, or maintenance needs.",
+              "position": 140737488502784
+            },
+            {
+              "id": "69efc29a75f3267fb3c6fcad",
+              "text": " Recharge batteries according to next-mission/storage requirements.",
+              "position": 140737488519168
+            },
+            {
+              "id": "69efc29a8ce3d5c4a6279282",
+              "text": " Clean aircraft, sensors, case, and field kit.",
+              "position": 140737488535552
+            },
+            {
+              "id": "69efc29bf8ed8851f6686b29",
+              "text": " Reset kit for next mission.",
+              "position": 140737488551936
+            }
+          ]
+        },
+        {
+          "id": "69efc32282585b538428ba08",
+          "name": "Emergency Procedures: Lost Link / C2 Link Degradation",
+          "position": 140737488470016,
+          "items": [
+            {
+              "id": "69efc32c2da5ca34e9aa3d22",
+              "text": "Announce: “Lost Link” or “Weak Link.”",
+              "position": 140737488355328
+            },
+            {
+              "id": "69efc32cb56bfcb6e821e4a3",
+              "text": " Confirm antenna orientation toward ANAFI USA.",
+              "position": 140737488371712
+            },
+            {
+              "id": "69efc32caf90dae9627011dd",
+              "text": " Stop unnecessary aircraft movement if control remains available.",
+              "position": 140737488388096
+            },
+            {
+              "id": "69efc32c9af408d6fc079ddb",
+              "text": " Verify RTH behavior if automatic RTH initiates.",
+              "position": 140737488404480
+            },
+            {
+              "id": "69efc32d9945d9e3fbf818e8",
+              "text": " Activate RTH manually if appropriate and not already triggered.",
+              "position": 140737488420864
+            },
+            {
+              "id": "69efc32d909d335d9cc932f4",
+              "text": " Monitor aircraft direction, altitude, and speed.",
+              "position": 140737488437248
+            },
+            {
+              "id": "69efc32d5fcad602ef285769",
+              "text": " Confirm landing area is clear.",
+              "position": 140737488453632
+            },
+            {
+              "id": "69efc32e8adf8e0a5d369800",
+              "text": " Announce: “Returning to Home.”",
+              "position": 140737488470016
+            },
+            {
+              "id": "69efc32e51b103c524214ff5",
+              "text": " Regain manual control if safe and appropriate.",
+              "position": 140737488486400
+            },
+            {
+              "id": "69efc32e854016b6d92551ca",
+              "text": " Announce: “Landing.”",
+              "position": 140737488502784
+            },
+            {
+              "id": "69efc32f65a1d1b78469b420",
+              "text": " Land and disarm.",
+              "position": 140737488519168
+            },
+            {
+              "id": "69efc32f9eb6708039e158d8",
+              "text": " Power down aircraft.",
+              "position": 140737488535552
+            },
+            {
+              "id": "69efc32f8e3601221f37d0a5",
+              "text": " Announce: “Lost Link” or “Weak Link.”",
+              "position": 140737488551936
+            },
+            {
+              "id": "69efc3309357a52e23cc2867",
+              "text": " Confirm antenna orientation toward ANAFI USA.",
+              "position": 140737488568320
+            },
+            {
+              "id": "69efc330569f0e0d97316c03",
+              "text": " Stop unnecessary aircraft movement if control remains available.",
+              "position": 140737488584704
+            },
+            {
+              "id": "69efc3300b9b95c9aa7bff32",
+              "text": " Verify RTH behavior if automatic RTH initiates.",
+              "position": 140737488601088
+            },
+            {
+              "id": "69efc33102f784edb2cc9a02",
+              "text": " Activate RTH manually if appropriate and not already triggered.",
+              "position": 140737488617472
+            },
+            {
+              "id": "69efc331003acf94302c9fa3",
+              "text": " Monitor aircraft direction, altitude, and speed.",
+              "position": 140737488633856
+            },
+            {
+              "id": "69efc3328d86f33f76c1241f",
+              "text": " Confirm landing area is clear.",
+              "position": 140737488650240
+            },
+            {
+              "id": "69efc33240aca3c6c92c2a89",
+              "text": " Announce: “Returning to Home.”",
+              "position": 140737488666624
+            },
+            {
+              "id": "69efc3331b66aa5c4761eb22",
+              "text": " Regain manual control if safe and appropriate.",
+              "position": 140737488683008
+            },
+            {
+              "id": "69efc333a459bcd8c45c7832",
+              "text": " Announce: “Landing.”",
+              "position": 140737488699392
+            },
+            {
+              "id": "69efc334d9f09f2c289ee061",
+              "text": " Land and disarm.",
+              "position": 140737488715776
+            },
+            {
+              "id": "69efc334a612494a15bf03f3",
+              "text": " Power down aircraft.",
+              "position": 140737488732160
+            }
+          ]
+        },
+        {
+          "id": "69efc3428e3601221f37ff4a",
+          "name": "Emergency Procedures: Uncommanded Control Input",
+          "position": 140737488486400,
+          "items": [
+            {
+              "id": "69efc351f53343ef0b4679ad",
+              "text": "Announce: “Uncommanded Input.”",
+              "position": 140737488355328
+            },
+            {
+              "id": "69efc35161bb69d84792b0c2",
+              "text": " Attempt to stabilize aircraft.",
+              "position": 140737488371712
+            },
+            {
+              "id": "69efc3510dd353d9721f4722",
+              "text": " Stop mission and climb/hold if safe.",
+              "position": 140737488388096
+            },
+            {
+              "id": "69efc3525ea470d7d533a0eb",
+              "text": " Return manually if able.",
+              "position": 140737488404480
+            },
+            {
+              "id": "69efc3537eafbe5b50e9b35d",
+              "text": " Activate RTH only if GPS/home point are reliable and RTH path is safe.",
+              "position": 140737488420864
+            },
+            {
+              "id": "69efc353db9bb6181686463e",
+              "text": " Land as soon as safely possible.",
+              "position": 140737488437248
+            },
+            {
+              "id": "69efc353995795ab53b32480",
+              "text": " Announce: “Landing.”",
+              "position": 140737488453632
+            },
+            {
+              "id": "69efc353524a5ec688553e66",
+              "text": " Disarm.",
+              "position": 140737488470016
+            },
+            {
+              "id": "69efc354beb6e4419eab9fd5",
+              "text": " Power down.",
+              "position": 140737488486400
+            },
+            {
+              "id": "69efc354acfb827a84024cde",
+              "text": " Inspect aircraft, propellers, gimbal, sensors, and battery.",
+              "position": 140737488502784
+            },
+            {
+              "id": "69efc355b2066f3f85253bb8",
+              "text": " Do not relaunch until issue is understood and resolved.",
+              "position": 140737488519168
+            }
+          ]
+        },
+        {
+          "id": "69efc3679f0ee60b58a5c56f",
+          "name": "Emergency Procedures: Loss of GPS / Poor GPS",
+          "position": 140737488502784,
+          "items": [
+            {
+              "id": "69efc3719f4f8eb8345de4d6",
+              "text": "Announce: “GPS Issue.”",
+              "position": 140737488355328
+            },
+            {
+              "id": "69efc372866e58b27350049e",
+              "text": " Maintain manual control.",
+              "position": 140737488371712
+            },
+            {
+              "id": "69efc372697a8eb698dec8c3",
+              "text": " Avoid automated/assisted flight modes.",
+              "position": 140737488388096
+            },
+            {
+              "id": "69efc3720951e1f6150ad531",
+              "text": " Do not rely on RTH if home point/GPS is unreliable.",
+              "position": 140737488404480
+            },
+            {
+              "id": "69efc37223f50df92b5dbdcb",
+              "text": " Confirm adequate ground texture and lighting for optical-flow stabilization.",
+              "position": 140737488420864
+            },
+            {
+              "id": "69efc373e36a8b20d6f84c02",
+              "text": " Return manually and land as soon as safely possible.",
+              "position": 140737488437248
+            },
+            {
+              "id": "69efc3738e7155b91ebd5fae",
+              "text": " Confirm landing area is clear.",
+              "position": 140737488453632
+            },
+            {
+              "id": "69efc373d77df5bfddba844d",
+              "text": " Announce: “Landing.”",
+              "position": 140737488470016
+            },
+            {
+              "id": "69efc374c97271cbd2b75f81",
+              "text": " Disarm and power down.",
+              "position": 140737488486400
+            },
+            {
+              "id": "69efc374af29cb6e1c24b18f",
+              "text": " Troubleshoot GPS/magnetometer interference.",
+              "position": 140737488502784
+            },
+            {
+              "id": "69efc3756e8536ffadc697b8",
+              "text": " Check environment for metal structures, vehicles, rebar, towers, or electromagnetic interference.",
+              "position": 140737488519168
+            }
+          ]
+        },
+        {
+          "id": "69efc38c141f464236a49281",
+          "name": "Emergency Procedures: Loss of VLOS",
+          "position": 140737488519168,
+          "items": [
+            {
+              "id": "69efc397066a521270189481",
+              "text": "Announce: “Lost Visual.”",
+              "position": 140737488355328
+            },
+            {
+              "id": "69efc397a589d817447f26da",
+              "text": " Stop lateral movement if safe.",
+              "position": 140737488371712
+            },
+            {
+              "id": "69efc39721d2ebc5c235d202",
+              "text": " Use camera/map orientation to assist recovery.",
+              "position": 140737488388096
+            },
+            {
+              "id": "69efc39893a7d86c15a58cbc",
+              "text": " Visual observer attempts to reacquire aircraft if present.",
+              "position": 140737488404480
+            },
+            {
+              "id": "69efc39816321666ff94551e",
+              "text": " If unable to regain VLOS, verify GPS/home point and initiate RTH if safe.",
+              "position": 140737488420864
+            },
+            {
+              "id": "69efc3988648e992feac1130",
+              "text": " Follow RTH checklist.",
+              "position": 140737488437248
+            },
+            {
+              "id": "69efc399ce5f857f3c4c5bad",
+              "text": " Land as soon as safely practical.",
+              "position": 140737488453632
+            }
+          ]
+        },
+        {
+          "id": "69efc3b6eb11340cf5d68a3c",
+          "name": "Emergency Procedures: Smart RTH / Manual RTH",
+          "position": 140737488535552,
+          "items": [
+            {
+              "id": "69efc3c98caec6ee48146883",
+              "text": "Announce: “RTH Activated.”",
+              "position": 140737488355328
+            },
+            {
+              "id": "69efc3ca87b443799bfe2858",
+              "text": " Confirm RTH altitude is safe for the site.",
+              "position": 140737488371712
+            },
+            {
+              "id": "69efc3ca8c0c8d3992f26717",
+              "text": " Monitor aircraft return path.",
+              "position": 140737488388096
+            },
+            {
+              "id": "69efc3ca0c4c8803a60f4916",
+              "text": " Confirm landing area is clear.",
+              "position": 140737488404480
+            },
+            {
+              "id": "69efc3cb53ccb04ec0a55aa3",
+              "text": " Be ready to regain manual control if unsafe conditions develop.",
+              "position": 140737488420864
+            },
+            {
+              "id": "69efc3cbbc4c4bf53434f782",
+              "text": " Pause/cancel RTH only if manual control is available and safe.",
+              "position": 140737488437248
+            },
+            {
+              "id": "69efc3cb3ced63ec1429e773",
+              "text": " Land aircraft.",
+              "position": 140737488453632
+            },
+            {
+              "id": "69efc3ccaba03b04f5bac04a",
+              "text": " Announce: “Disarmed.”",
+              "position": 140737488470016
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
