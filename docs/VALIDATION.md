@@ -2,7 +2,7 @@
 
 ## Automated
 
-`npm test`: 39 passing tests covering:
+`npm test`: 50 passing tests covering:
 
 - One-item acknowledgement, pause, completion boundaries, previous-item reopening and per-segment progress.
 - Emergency priority, all four Parrot branches, repeated interruption, normal-checklist bookmarking and explicit restoration.
@@ -12,6 +12,7 @@
 - Production startup requirements, signed sessions, authentication failures, CSRF/origin controls, guess limits and secret redaction.
 - Fixed voice requests, scoped Scribe token creation, audio cache reuse, n8n bridge routing and failed Trello refresh retention.
 - Audio interruption races: a delayed old response never plays after Emergency or Stop; cached audio plays without another network request.
+- iPhone audio-session categories, pending/interrupted resumes and timeout, expired voice sessions, and device-speech start events and watchdog.
 - The hosted Request/Response adapter: signed-cookie round trips, byte-exact binary audio, origin and body-size enforcement, and resistance to spoofed forwarding headers in login limits.
 
 `npm run build`: TypeScript validation and production build pass. The ElevenLabs client SDK is loaded separately from the initial interface. Its vendor chunk is approximately 139 KB gzip and generates Vite's default large-chunk advisory.
@@ -36,7 +37,7 @@ On September 13, 2026, n8n executed both requests with the existing **ElevenLabs
 
 ## Deployed integration checks
 
-[Live application](https://onpoint-sky-checklists.netlify.app), deployed September 13, 2026. [Deployment log](https://app.netlify.com/projects/onpoint-sky-checklists/deploys/6aa71e8bdcefc0e1463205a2).
+[Live application](https://onpoint-sky-checklists.netlify.app), deployed September 13, 2026. [Deployment log](https://app.netlify.com/projects/onpoint-sky-checklists/deploys/6aa726cc1250a0ea8ebc6f7a).
 
 - The n8n bridge is published. Export verification confirmed both webhooks select **OnPoint Sky Voice Guard**, outgoing HTTP nodes select **ElevenLabs**, and failed/successful/manual/progress execution payload saving is disabled.
 - An unauthenticated n8n token request returned 403; the configured guard returned 200 with a token.
@@ -52,3 +53,13 @@ On September 13, 2026, n8n executed both requests with the existing **ElevenLabs
 - The missing DJI procedures and repeated Parrot lost-link sequence remain source-content decisions for the owner.
 
 The app is a checklist reader, not a certified aircraft monitoring or control system. Operational readiness has not been established by these software checks.
+
+## Audio correction, v1.0.1
+
+The owner reported silent readout after the first deployment. The original Web Audio implementation left iPhone audio in its default ambient category. [WebKit documents that this category follows the Silent switch](https://bugs.webkit.org/show_bug.cgi?id=237322#c6). The app now requests playback, or play-and-record while its microphone is connecting/listening, when the Audio Session API is supported. Browsers without that API keep their platform defaults; older iOS versions may still require Silent mode off.
+
+Playback waits for a pending AudioContext resume and retries after an interruption. Suspended output resumes or shows an actionable error. Device speech only reports Reading after its start event and reports failures/timeouts. An expired app session opens the unlock screen and preserves the reason. Settings includes the app version and media-volume guidance.
+
+A fresh authenticated production voice-test response returned 55,633 bytes of MP3 audio. FFmpeg decoded 3.47 seconds, with mean volume -18.5 dB and peak -1.4 dB, confirming non-silent service output. Local Chromium playback reached Reading without a fallback or console error. These checks do not establish audibility on the owner's physical iPhone; that confirmation is still pending.
+
+To pick up the update, reload the site once to download the new service worker, close all of its Safari tabs and Home Screen windows, then reopen. Settings should show App v1.0.1. Existing progress and audio packs are retained.

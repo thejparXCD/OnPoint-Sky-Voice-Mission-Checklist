@@ -121,3 +121,9 @@ To update the source, set server-only `TRELLO_API_KEY` and `TRELLO_TOKEN`. **Ref
 - Permanent credentials remain on the server or in n8n. Signed sessions use HttpOnly, Secure, SameSite cookies in production. API requests have authentication, origin checks, rate limits and an allowlist of speech items. Scribe sends microphone audio directly to ElevenLabs while enabled. Device recognition uses the browser's speech service.
 
 See [validation notes](docs/VALIDATION.md) for what has and has not been verified.
+
+### No sound on iPhone
+
+Open Settings and unlock voice on this device if prompted, then tap **Test voice**. Raise media volume during the test and check the selected speaker/headset. Version 1.0.1 selects the iPhone playback audio category (iOS 17+) and recovers interrupted audio; older iOS versions may still require Silent mode off. If playback is blocked, the app displays the next action.
+
+After an update, reload once, close every Safari tab and Home Screen window for the app, then reopen it. Check **App v1.0.1** in Settings. Closing windows lets the pending update activate without replacing an active checklist; saved progress and downloaded audio are retained.
